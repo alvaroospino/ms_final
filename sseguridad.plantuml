@@ -1,0 +1,97 @@
+@startuml
+skinparam packageStyle rectangle
+skinparam usecase {
+    BorderColor #444444
+    BackgroundColor #FAFAFA
+    ArrowColor #444444
+    FontSize 11
+}
+skinparam actor {
+    BorderColor #444444
+    BackgroundColor #FAFAFA
+    FontSize 11
+}
+skinparam nodesep 50
+skinparam ranksep 50
+
+left to right direction
+
+actor "Usuario" as U
+actor "Administrador" as Admin
+actor "Proveedor OAuth" as OAuth
+actor "Cliente de aplicación" as AppClient
+
+U <|-- Admin
+
+rectangle "Microservicio de\nseguridad / autenticación" {
+
+    usecase "Registrarse" as UC1
+    usecase "Iniciar sesión\ncon credenciales" as UC2
+    usecase "Iniciar sesión\ncon OAuth" as UC3
+    usecase "Verificar correo\nelectrónico" as UC4
+    usecase "Recuperar\ncontraseña" as UC5
+    usecase "Cerrar sesión" as UC6
+    usecase "Configurar 2FA" as UC7
+    usecase "Refrescar token\nde acceso" as UC11
+
+    usecase "Validar código\nde verificación" as UC8
+    usecase "Registrar intento\nde autenticación" as UC9
+    usecase "Bloquear cuenta" as UC10
+    usecase "Revocar tokens\nde sesión" as UC18
+    usecase "Registrar\nauditoría" as UC19
+
+    usecase "Gestionar roles" as UC13
+    usecase "Gestionar permisos" as UC14
+    usecase "Asignar rol\na persona" as UC15
+    usecase "Consultar historial\nde sesiones" as UC16
+    usecase "Consultar\nauditoría" as UC17
+}
+
+U -- UC1
+U -- UC2
+U -- UC3
+U -- UC4
+U -- UC5
+U -- UC6
+U -- UC7
+
+OAuth -- UC3
+AppClient -- UC11
+
+Admin -- UC13
+Admin -- UC14
+Admin -- UC15
+Admin -- UC16
+Admin -- UC17
+Admin -- UC18
+
+UC1  .> UC8  : <<include>>
+UC1  .> UC19 : <<include>>
+
+UC2  .> UC9  : <<include>>
+UC3  .> UC9  : <<include>>
+
+UC4  .> UC8  : <<include>>
+UC4  .> UC19 : <<include>>
+
+UC5  .> UC8  : <<include>>
+UC5  .> UC19 : <<include>>
+
+UC6  .> UC18 : <<include>>
+UC6  .> UC19 : <<include>>
+
+UC7  .> UC8  : <<include>>
+UC7  .> UC19 : <<include>>
+
+UC9  .> UC19 : <<include>>
+
+UC11 .> UC19 : <<include>>
+
+UC10 .> UC19 : <<include>>
+
+UC15 .> UC19 : <<include>>
+UC18 .> UC19 : <<include>>
+
+UC10 .> UC9  : <<extend>>
+
+@enduml

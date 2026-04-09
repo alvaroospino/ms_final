@@ -1,0 +1,133 @@
+Lo que ya hicieron
+1. Infraestructura base
+.env configurado
+conexión a PostgreSQL funcionando
+servidor Fastify levantando bien
+GET /health
+banner de arranque
+manejo global de errores
+2. Gestión básica de personas
+registrar persona local
+listar personas
+contar personas
+validación de datos
+control de correo duplicado con respuesta correcta
+
+Endpoints:
+
+GET /health
+GET /api/personas
+GET /api/personas/count
+POST /api/personas/register-local
+3. Autenticación local
+login local
+hash de contraseña
+verificación de contraseña
+control de intentos fallidos
+bloqueo temporal básico
+emisión de accessToken
+emisión de refreshToken
+
+Endpoints:
+
+POST /api/auth/login-local
+4. Sesiones y tokens
+refresh token hasheado en BD
+refresh con rotación
+revocación del refresh viejo
+logout
+cierre de ingreso
+consulta del usuario autenticado
+middleware JWT
+
+Endpoints:
+
+POST /api/auth/refresh
+POST /api/auth/logout
+GET /api/auth/me
+5. Historial de sesiones
+listar mis sesiones
+ver detalle de una sesión
+
+Endpoints:
+
+GET /api/auth/sessions
+GET /api/auth/sessions/:idIngreso
+6. Roles y permisos
+
+Asumiendo que ese bloque ya lo cerraron, ya tienen:
+
+crear rol
+listar roles
+crear permiso
+listar permisos
+asignar rol a persona
+quitar rol a persona
+consultar roles de una persona
+asignar permiso a rol
+quitar permiso a rol
+consultar permisos de un rol
+roles y permisos dentro del JWT
+middleware por rol
+middleware por permiso
+rutas protegidas de administración
+
+Endpoints:
+
+GET /api/roles
+POST /api/roles
+GET /api/permisos
+POST /api/permisos
+GET /api/personas/:idPersona/roles
+POST /api/personas/:idPersona/roles
+DELETE /api/personas/:idPersona/roles/:idRol
+GET /api/roles/:idRol/permisos
+POST /api/roles/:idRol/permisos
+DELETE /api/roles/:idRol/permisos/:idPermiso
+Qué ya pueden demostrar
+
+Pueden decir que el microservicio:
+
+autentica usuarios
+emite tokens para otros microservicios
+valida tokens
+maneja sesiones
+permite logout y refresh
+protege rutas
+soporta autorización por roles y permisos
+Qué falta
+1. Auditoría general
+
+Todavía falta una auditoría más completa, no solo ingresos:
+
+login exitoso
+login fallido
+refresh
+logout
+creación de rol
+asignación de rol
+asignación de permiso
+cambios sensibles
+2. Verificación y recuperación
+
+Faltan estos flujos:
+
+verificar correo
+generar y validar códigos
+recuperación de contraseña
+cambio de contraseña con código/token
+3. 2FA
+activar/desactivar segundo factor
+validar segundo factor
+4. OAuth
+
+Tu base lo soporta, pero falta implementarlo:
+
+Google
+Microsoft
+Apple
+5. Mejoras opcionales
+logout global en todos los dispositivos
+cerrar sesiones específicas
+administración más fina de permisos
+auditoría consultable por endpoint
