@@ -18,9 +18,9 @@ const inet = customType<{ data: string }>({
 
 export const personas = pgTable("personas", {
   id: uuid("id_persona").primaryKey(),
-  nombres: varchar("nombres_persona", { length: 120 }).notNull(),
-  apellidos: varchar("apellidos_persona", { length: 120 }).notNull(),
-  correo: varchar("correo_persona", { length: 255 }).notNull(),
+  nombres: varchar("nombres_persona", { length: 120 }),
+  apellidos: varchar("apellidos_persona", { length: 120 }),
+  correo: varchar("correo_persona", { length: 255 }),
   celular: varchar("celular_persona", { length: 20 }),
   estado: smallint("estado_persona").notNull(),
   fechaEliminacion: timestamp("fecha_eliminacion_persona", { withTimezone: true }),
@@ -32,6 +32,8 @@ export const autenticacionesPersona = pgTable("autenticaciones_persona", {
   id: uuid("id_autenticacion").primaryKey(),
   idPersona: uuid("id_persona").notNull(),
   proveedor: varchar("proveedor_autenticacion", { length: 30 }).notNull(),
+  tipoIdentificador: varchar("tipo_identificador_autenticacion", { length: 20 }),
+  identificador: varchar("identificador_autenticacion", { length: 255 }),
   identificadorExterno: varchar("identificador_externo_autenticacion", { length: 255 }),
   hashClave: varchar("hash_clave_autenticacion", { length: 255 }),
   verificado: smallint("verificado_autenticacion").notNull(),
@@ -42,6 +44,20 @@ export const autenticacionesPersona = pgTable("autenticaciones_persona", {
   ultimoIngreso: timestamp("ultimo_ingreso_autenticacion", { withTimezone: true }),
   fechaCreacion: timestamp("fecha_creacion_autenticacion", { withTimezone: true }).notNull(),
   fechaActualizacion: timestamp("fecha_actualizacion_autenticacion", { withTimezone: true }).notNull(),
+});
+
+export const registrosPendientes = pgTable("registros_pendientes", {
+  id: uuid("id_registro_pendiente").primaryKey(),
+  tipoIdentificador: varchar("tipo_identificador_registro", { length: 20 }).notNull(),
+  identificador: varchar("identificador_registro", { length: 255 }).notNull(),
+  hashCodigo: varchar("hash_codigo_registro", { length: 255 }).notNull(),
+  intentos: smallint("intentos_registro").notNull(),
+  verificado: smallint("verificado_registro").notNull(),
+  completado: smallint("completado_registro").notNull(),
+  fechaExpiracion: timestamp("fecha_expiracion_registro", { withTimezone: true }).notNull(),
+  fechaVerificacion: timestamp("fecha_verificacion_registro", { withTimezone: true }),
+  fechaCreacion: timestamp("fecha_creacion_registro", { withTimezone: true }).notNull(),
+  fechaActualizacion: timestamp("fecha_actualizacion_registro", { withTimezone: true }).notNull(),
 });
 
 export const ingresos = pgTable("ingresos", {

@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const loginPersonaLocalRequestSchema = z.object({
-  correo: z.string().trim().toLowerCase().email(),
+  identificador: z.string().trim().min(1),
   clave: z.string().min(1),
 });
 

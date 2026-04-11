@@ -58,7 +58,7 @@ export class SolicitarRecuperacionClaveUseCase {
 
     await this.emailQueue.enqueuePasswordRecoveryEmail({
       to: correo,
-      recipientName: auth.persona.nombreCompleto,
+      recipientName: auth.persona.nombreCompleto || auth.identificador,
       code: codigoPlano,
       expiresAt: fechaExpiracion,
       expiresInMinutes: EXPIRACION_MINUTOS,

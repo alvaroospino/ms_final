@@ -1,5 +1,6 @@
-import { jwtVerify, SignJWT } from "jose";
 import { createSecretKey } from "node:crypto";
+
+import { jwtVerify, SignJWT } from "jose";
 
 import {
   DecodedAccessToken,
@@ -13,7 +14,7 @@ function getExpirationDate(expiresIn: string): Date {
 
   const match = /^(\d+)([mhd])$/.exec(expiresIn);
   if (!match) {
-    throw new Error(`Formato inválido de expiración: ${expiresIn}`);
+    throw new Error(`Formato invalido de expiracion: ${expiresIn}`);
   }
 
   const value = Number(match[1]);
@@ -27,19 +28,16 @@ function getExpirationDate(expiresIn: string): Date {
 }
 
 export class JoseJwtService implements JwtService {
-  private readonly secretKey = createSecretKey(
-    Buffer.from(jwtConfig.accessSecret, "utf-8"),
-  );
+  private readonly secretKey = createSecretKey(Buffer.from(jwtConfig.accessSecret, "utf-8"));
 
-  async generateAccessToken(payload: JwtAccessPayload): Promise<{
-    token: string;
-    expiresAt: Date;
-  }> {
+  async generateAccessToken(payload: JwtAccessPayload): Promise<{ token: string; expiresAt: Date }> {
     const expiresAt = getExpirationDate(jwtConfig.accessExpiresIn);
 
     const token = await new SignJWT({
-      correo: payload.correo,
       authId: payload.authId,
+      identificador: payload.identificador,
+      tipoIdentificador: payload.tipoIdentificador,
+      correo: payload.correo,
       roles: payload.roles,
       permisos: payload.permisos,
     })
@@ -50,21 +48,19 @@ export class JoseJwtService implements JwtService {
       .setExpirationTime(jwtConfig.accessExpiresIn)
       .sign(this.secretKey);
 
-    return {
-      token,
-      expiresAt,
-    };
+    return { token, expiresAt };
   }
 
   async verifyAccessToken(token: string): Promise<DecodedAccessToken> {
-    const { payload } = await jwtVerify(token, this.secretKey, {
-      issuer: jwtConfig.issuer,
-    });
+    const { payload } = await jwtVerify(token, this.secretKey, { issuer: jwtConfig.issuer });
 
     return {
       sub: String(payload.sub),
       authId: String(payload.authId),
-      correo: String(payload.correo),
+      identificador: String(payload.identificador),
+      tipoIdentificador:
+        payload.tipoIdentificador === "celular" ? "celular" : "correo",
+      correo: typeof payload.correo === "string" ? payload.correo : null,
       roles: Array.isArray(payload.roles) ? payload.roles.map(String) : [],
       permisos: Array.isArray(payload.permisos) ? payload.permisos.map(String) : [],
       iss: String(payload.iss),

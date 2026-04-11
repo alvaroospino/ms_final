@@ -14,11 +14,13 @@ export interface RefreshTokenResult {
   refreshTokenExpiresAt: string;
   persona: {
     id: string;
-    nombres: string;
-    apellidos: string;
-    nombreCompleto: string;
-    correo: string;
+    nombres: string | null;
+    apellidos: string | null;
+    nombreCompleto: string | null;
+    correo: string | null;
     celular: string | null;
+    identificador: string;
+    tipoIdentificador: "correo" | "celular";
     estado: number;
     activa: boolean;
   };
@@ -33,28 +35,20 @@ export class RefreshTokenUseCase {
 
   async execute(input: RefreshTokenInput): Promise<RefreshTokenResult> {
     const rawRefreshToken = input.refreshToken.trim();
-
     if (!rawRefreshToken) {
       throw new InvalidTokenError("Refresh token requerido");
     }
 
     let decoded: { sub: string; authId: string };
-
     try {
-      const payload =
-        await this.refreshTokenService.verifyRefreshToken(rawRefreshToken);
-      decoded = {
-        sub: payload.sub,
-        authId: payload.authId,
-      };
+      const payload = await this.refreshTokenService.verifyRefreshToken(rawRefreshToken);
+      decoded = { sub: payload.sub, authId: payload.authId };
     } catch {
-      throw new InvalidTokenError("Refresh token inválido o expirado");
+      throw new InvalidTokenError("Refresh token invalido o expirado");
     }
 
     const tokenHash = await this.refreshTokenService.hashToken(rawRefreshToken);
-
-    const session =
-      await this.repository.findRefreshTokenSessionByHash(tokenHash);
+    const session = await this.repository.findRefreshTokenSessionByHash(tokenHash);
 
     if (!session) {
       throw new InvalidTokenError("Refresh token no reconocido");
@@ -64,28 +58,21 @@ export class RefreshTokenUseCase {
       throw new InvalidTokenError("Refresh token revocado o inactivo");
     }
 
-    if (
-      session.idPersona !== decoded.sub ||
-      session.idAutenticacion !== decoded.authId
-    ) {
-      throw new InvalidTokenError("Refresh token no corresponde a la sesión");
+    if (session.idPersona !== decoded.sub || session.idAutenticacion !== decoded.authId) {
+      throw new InvalidTokenError("Refresh token no corresponde a la sesion");
     }
 
-    await this.repository.revocarRefreshToken({
-      idToken: session.idToken,
-    });
+    await this.repository.revocarRefreshToken({ idToken: session.idToken });
 
-    const roles = await this.repository.findRolesByPersonaId(
-      session.persona.id,
-    );
-    const permisos = await this.repository.findPermisosByPersonaId(
-      session.persona.id,
-    );
+    const roles = await this.repository.findRolesByPersonaId(session.persona.id);
+    const permisos = await this.repository.findPermisosByPersonaId(session.persona.id);
 
     const access = await this.jwtService.generateAccessToken({
       sub: session.persona.id,
       authId: session.idAutenticacion,
-      correo: session.persona.correo.toString(),
+      identificador: session.identificador,
+      tipoIdentificador: session.tipoIdentificador,
+      correo: session.correo,
       roles: roles.map((rol) => rol.nombre),
       permisos: permisos.map((permiso) => permiso.nombre),
     });
@@ -95,10 +82,7 @@ export class RefreshTokenUseCase {
       authId: session.idAutenticacion,
     });
 
-    const newRefreshHash = await this.refreshTokenService.hashToken(
-      refresh.token,
-    );
-
+    const newRefreshHash = await this.refreshTokenService.hashToken(refresh.token);
     await this.repository.guardarRefreshToken({
       idIngreso: session.idIngreso,
       tokenHash: newRefreshHash,
@@ -113,9 +97,11 @@ export class RefreshTokenUseCase {
         id: session.persona.id,
         nombres: session.persona.nombres,
         apellidos: session.persona.apellidos,
-        nombreCompleto: session.persona.nombreCompleto,
-        correo: session.persona.correo.toString(),
+        nombreCompleto: session.persona.nombreCompleto || null,
+        correo: session.persona.correo,
         celular: session.persona.celular,
+        identificador: session.identificador,
+        tipoIdentificador: session.tipoIdentificador,
         estado: session.persona.estado,
         activa: session.persona.estaActiva(),
       },

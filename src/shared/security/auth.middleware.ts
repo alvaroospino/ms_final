@@ -16,9 +16,8 @@ export async function authMiddleware(
   }
 
   const [type, token] = authHeader.split(" ");
-
   if (type !== "Bearer" || !token) {
-    throw new InvalidTokenError("Formato de token inválido");
+    throw new InvalidTokenError("Formato de token invalido");
   }
 
   try {
@@ -27,11 +26,13 @@ export async function authMiddleware(
     request.user = {
       sub: payload.sub,
       authId: payload.authId,
+      identificador: payload.identificador,
+      tipoIdentificador: payload.tipoIdentificador,
       correo: payload.correo,
       roles: payload.roles,
       permisos: payload.permisos,
     };
   } catch {
-    throw new InvalidTokenError("Token inválido o expirado");
+    throw new InvalidTokenError("Token invalido o expirado");
   }
 }

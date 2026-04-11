@@ -1,4 +1,5 @@
 import { Persona } from "@/core/domain/entities/persona.entity.js";
+import { TipoIdentificadorAcceso } from "@/core/domain/repositories/registro-pendiente.repository.js";
 
 export interface RegistrarPersonaLocalParams {
   nombres: string;
@@ -8,11 +9,19 @@ export interface RegistrarPersonaLocalParams {
   hashClave: string;
 }
 
+export interface RegistrarPersonaAccesoParams {
+  tipoIdentificador: TipoIdentificadorAcceso;
+  identificador: string;
+  hashClave: string;
+}
+
 export interface RegistroPersonaLocalResult {
   persona: Persona;
   autenticacion: {
     id: string;
     proveedor: "local";
+    tipoIdentificador?: TipoIdentificadorAcceso;
+    identificador?: string;
     verificado: boolean;
     estado: number;
     requiereCambioClave: boolean;
@@ -22,7 +31,9 @@ export interface RegistroPersonaLocalResult {
 export interface AutenticacionLocalRecord {
   id: string;
   idPersona: string;
-  correo: string;
+  tipoIdentificador: TipoIdentificadorAcceso;
+  identificador: string;
+  correo: string | null;
   hashClave: string;
   verificado: boolean;
   estado: number;
@@ -54,9 +65,16 @@ export interface PersonaRepository {
   findAll(): Promise<Persona[]>;
   count(): Promise<number>;
   findByCorreo(correo: string): Promise<Persona | null>;
+  findByIdentificador(identificador: string): Promise<AutenticacionLocalRecord | null>;
   registrarLocal(params: RegistrarPersonaLocalParams): Promise<RegistroPersonaLocalResult>;
+  registrarLocalConIdentificador(
+    params: RegistrarPersonaAccesoParams,
+  ): Promise<RegistroPersonaLocalResult>;
 
   findAutenticacionLocalByCorreo(correo: string): Promise<AutenticacionLocalRecord | null>;
+  findAutenticacionLocalByIdentificador(
+    identificador: string,
+  ): Promise<AutenticacionLocalRecord | null>;
   findAutenticacionById(idAutenticacion: string): Promise<AutenticacionLocalRecord | null>;
   incrementarIntentosFallidos(idAutenticacion: string): Promise<number>;
   reiniciarIntentosFallidosYActualizarIngreso(idAutenticacion: string): Promise<void>;
@@ -81,10 +99,12 @@ export interface RefreshTokenSessionRecord {
   idIngreso: number;
   idAutenticacion: string;
   idPersona: string;
-  correo: string;
+  correo: string | null;
   estadoToken: number;
   fechaRevocacion: Date | null;
   persona: Persona;
+  tipoIdentificador: TipoIdentificadorAcceso;
+  identificador: string;
 }
 
 export interface RevocarRefreshTokenParams {
@@ -115,5 +135,5 @@ export interface SessionRecord {
 
 export interface SessionDetailRecord extends SessionRecord {
   idPersona: string;
-  correo: string;
+  correo: string | null;
 }

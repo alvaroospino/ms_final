@@ -5,6 +5,8 @@ export interface RegisterPersonaLocalResponseDto {
   autenticacion: {
     id: string;
     proveedor: "local";
+    tipoIdentificador?: "correo" | "celular";
+    identificador?: string;
     verificado: boolean;
     estado: number;
     requiereCambioClave: boolean;

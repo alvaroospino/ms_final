@@ -67,3 +67,10 @@ export const emailConfig = {
 export const queueConfig = {
   provider: getEnv("QUEUE_PROVIDER", "memory"),
 };
+
+export const smsConfig = {
+  provider: getEnv("SMS_PROVIDER", "noop"),
+  endpoint: getOptionalEnv("SMS_ENDPOINT"),
+  token: getOptionalEnv("SMS_TOKEN"),
+  timeoutMs: getNumberEnv("SMS_TIMEOUT_MS", "5000"),
+};

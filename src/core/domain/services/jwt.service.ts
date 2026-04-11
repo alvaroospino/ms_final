@@ -1,7 +1,11 @@
+import { TipoIdentificadorAcceso } from "@/core/domain/repositories/registro-pendiente.repository.js";
+
 export interface JwtAccessPayload {
   sub: string;
   authId: string;
-  correo: string;
+  identificador: string;
+  tipoIdentificador: TipoIdentificadorAcceso;
+  correo: string | null;
   roles: string[];
   permisos: string[];
 }
@@ -16,7 +20,9 @@ export interface JwtTokenPair {
 export interface DecodedAccessToken {
   sub: string;
   authId: string;
-  correo: string;
+  identificador: string;
+  tipoIdentificador: TipoIdentificadorAcceso;
+  correo: string | null;
   roles: string[];
   permisos: string[];
   iss: string;

@@ -1,5 +1,6 @@
 import { createHash } from "node:crypto";
 import { CorreoYaVerificadoError } from "@/core/application/use-cases/errors/verificacion-errors.js";
+import { ValidationError } from "@/core/application/use-cases/errors/application-errors.js";
 import { InvalidTokenError } from "@/core/application/use-cases/errors/auth-errors.js";
 import { PersonaRepository } from "@/core/domain/repositories/persona.repository.js";
 import { CodigoVerificacionRepository } from "@/core/domain/repositories/codigo-verificacion.repository.js";
@@ -38,6 +39,12 @@ export class EnviarVerificacionCorreoUseCase {
       throw new CorreoYaVerificadoError();
     }
 
+    if (!auth.correo) {
+      throw new ValidationError([
+        { field: "correo", message: "La cuenta actual no fue registrada con correo" },
+      ]);
+    }
+
     await this.codigoRepo.invalidarCodigosAnteriores(input.idAutenticacion, "verificacion");
 
     const codigoPlano = String(Math.floor(100000 + Math.random() * 900000));
@@ -53,7 +60,7 @@ export class EnviarVerificacionCorreoUseCase {
 
     await this.emailQueue.enqueueVerificationEmail({
       to: auth.correo,
-      recipientName: auth.persona.nombreCompleto,
+      recipientName: auth.persona.nombreCompleto || auth.identificador,
       code: codigoPlano,
       expiresAt: fechaExpiracion,
       expiresInMinutes: EXPIRACION_MINUTOS,

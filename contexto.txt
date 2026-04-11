@@ -1,62 +1,92 @@
 Lo que ya hicieron
 1. Infraestructura base
 .env configurado
-conexión a PostgreSQL funcionando
+conexion a PostgreSQL funcionando
 servidor Fastify levantando bien
 GET /health
 banner de arranque
 manejo global de errores
-2. Gestión básica de personas
-registrar persona local
+
+2. Gestion basica de personas
 listar personas
 contar personas
-validación de datos
-control de correo duplicado con respuesta correcta
+validacion de datos
 
 Endpoints:
 
 GET /health
 GET /api/personas
 GET /api/personas/count
-POST /api/personas/register-local
-3. Autenticación local
-login local
+
+3. Registro local por identificador unico
+inicio de registro con un solo identificador
+el identificador puede ser correo o numero de telefono
+envio de codigo de verificacion por el canal correspondiente
+verificacion del codigo antes de crear la cuenta
+creacion final de cuenta solo despues de verificar y definir clave
+soporte de preregistro temporal
+
+Endpoints:
+
+POST /api/auth/register/iniciar
+POST /api/auth/register/verificar
+POST /api/auth/register/establecer-clave
+
+4. Autenticacion local
+login local con un solo campo de acceso
+el backend detecta si es correo o celular
 hash de contraseña
-verificación de contraseña
+verificacion de contraseña
 control de intentos fallidos
-bloqueo temporal básico
-emisión de accessToken
-emisión de refreshToken
+bloqueo temporal basico
+emision de accessToken
+emision de refreshToken
 
 Endpoints:
 
 POST /api/auth/login-local
-4. Sesiones y tokens
+
+5. Sesiones y tokens
 refresh token hasheado en BD
-refresh con rotación
-revocación del refresh viejo
+refresh con rotacion
+revocacion del refresh viejo
 logout
+logout global
 cierre de ingreso
 consulta del usuario autenticado
 middleware JWT
+el JWT ahora incluye identificador y tipoIdentificador
 
 Endpoints:
 
 POST /api/auth/refresh
 POST /api/auth/logout
+POST /api/auth/logout-global
 GET /api/auth/me
-5. Historial de sesiones
+
+6. Historial de sesiones
 listar mis sesiones
-ver detalle de una sesión
+ver detalle de una sesion
 
 Endpoints:
 
 GET /api/auth/sessions
 GET /api/auth/sessions/:idIngreso
-6. Roles y permisos
 
-Asumiendo que ese bloque ya lo cerraron, ya tienen:
+7. Verificacion y recuperacion
+verificacion de correo para cuentas que usan correo
+recuperacion de clave por correo
+cambio de clave autenticado
 
+Endpoints:
+
+POST /api/auth/verificar-correo/enviar
+POST /api/auth/verificar-correo/confirmar
+POST /api/auth/recuperar-clave
+POST /api/auth/restablecer-clave
+POST /api/auth/cambiar-clave
+
+8. Roles y permisos
 crear rol
 listar roles
 crear permiso
@@ -70,7 +100,7 @@ consultar permisos de un rol
 roles y permisos dentro del JWT
 middleware por rol
 middleware por permiso
-rutas protegidas de administración
+rutas protegidas de administracion
 
 Endpoints:
 
@@ -84,50 +114,52 @@ DELETE /api/personas/:idPersona/roles/:idRol
 GET /api/roles/:idRol/permisos
 POST /api/roles/:idRol/permisos
 DELETE /api/roles/:idRol/permisos/:idPermiso
-Qué ya pueden demostrar
+
+Que ya pueden demostrar
 
 Pueden decir que el microservicio:
 
 autentica usuarios
+permite registro con correo o telefono, pero usando solo uno
+verifica el identificador antes de crear la cuenta
 emite tokens para otros microservicios
 valida tokens
 maneja sesiones
 permite logout y refresh
 protege rutas
-soporta autorización por roles y permisos
-Qué falta
-1. Auditoría general
+soporta autorizacion por roles y permisos
 
-Todavía falta una auditoría más completa, no solo ingresos:
+Que falta
+1. Vincular un segundo identificador
 
-login exitoso
-login fallido
-refresh
-logout
-creación de rol
-asignación de rol
-asignación de permiso
-cambios sensibles
-2. Verificación y recuperación
+Si mas adelante lo necesitan:
 
-Faltan estos flujos:
+agregar correo a cuentas creadas con telefono
+agregar telefono a cuentas creadas con correo
+verificar el nuevo canal ya autenticado
 
-verificar correo
-generar y validar códigos
-recuperación de contraseña
-cambio de contraseña con código/token
+2. Recuperacion por telefono
+
+Todavia falta una version equivalente por SMS:
+
+solicitud de recuperacion por celular
+codigo por SMS
+restablecimiento de clave con telefono
+
 3. 2FA
 activar/desactivar segundo factor
 validar segundo factor
+
 4. OAuth
 
-Tu base lo soporta, pero falta implementarlo:
+La base lo soporta, pero falta implementarlo:
 
 Google
 Microsoft
 Apple
+
 5. Mejoras opcionales
-logout global en todos los dispositivos
-cerrar sesiones específicas
-administración más fina de permisos
-auditoría consultable por endpoint
+reenvio de codigo de registro
+expiracion y limpieza automatica de preregistros
+administracion mas fina de permisos
+auditoria consultable por endpoint

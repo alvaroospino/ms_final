@@ -89,11 +89,11 @@ export async function createServer(): Promise<FastifyInstance> {
 
     if (
       error instanceof PersonaAlreadyExistsError ||
-      error.message === "Ya existe una persona registrada con ese correo"
+      error.message === "Ya existe una cuenta registrada con ese identificador"
     ) {
       return reply.status(409).send({
         error: "PersonaAlreadyExistsError",
-        message: "Ya existe una persona registrada con ese correo",
+        message: "Ya existe una cuenta registrada con ese identificador",
       });
     }
 

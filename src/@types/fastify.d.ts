@@ -5,7 +5,9 @@ declare module "fastify" {
     user?: {
       sub: string;
       authId: string;
-      correo: string;
+      identificador: string;
+      tipoIdentificador: "correo" | "celular";
+      correo: string | null;
       roles: string[];
       permisos: string[];
     };

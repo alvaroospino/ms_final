@@ -1,11 +1,9 @@
-import { CorreoElectronico } from "@/core/domain/value-objects/correo-electronico.value-object.js";
-
 export class Persona {
   constructor(
     public readonly id: string,
-    public readonly nombres: string,
-    public readonly apellidos: string,
-    public readonly correo: CorreoElectronico,
+    public readonly nombres: string | null,
+    public readonly apellidos: string | null,
+    public readonly correo: string | null,
     public readonly celular: string | null,
     public readonly estado: number,
     public readonly fechaCreacion: Date,
@@ -16,15 +14,13 @@ export class Persona {
 
   private validar(): void {
     if (!this.id.trim()) throw new Error("El id de la persona es requerido");
-    if (!this.nombres.trim()) throw new Error("Los nombres son requeridos");
-    if (!this.apellidos.trim()) throw new Error("Los apellidos son requeridos");
     if (![0, 1, 2, 3].includes(this.estado)) {
-      throw new Error("Estado de persona inválido");
+      throw new Error("Estado de persona invalido");
     }
   }
 
   get nombreCompleto(): string {
-    return `${this.nombres} ${this.apellidos}`.trim();
+    return `${this.nombres ?? ""} ${this.apellidos ?? ""}`.trim();
   }
 
   estaActiva(): boolean {
