@@ -1,4 +1,4 @@
-import { PersonaRepository } from "@/core/domain/repositories/persona.repository.js";
+import { PersonaRepository } from "../../../domain/repositories/persona.repository.js";
 
 export class CountPersonasUseCase {
   constructor(private readonly repository: PersonaRepository) {}

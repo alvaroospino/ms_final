@@ -1,9 +1,9 @@
 import { and, count, eq, or, sql } from "drizzle-orm";
 import { randomUUID } from "node:crypto";
 
-import { DatabaseError } from "@/core/application/use-cases/errors/application-errors.js";
-import { PersonaAlreadyExistsError } from "@/core/application/use-cases/errors/persona-errors.js";
-import { Persona } from "@/core/domain/entities/persona.entity.js";
+import { DatabaseError } from "../../../../../core/application/use-cases/errors/application-errors.js";
+import { PersonaAlreadyExistsError } from "../../../../../core/application/use-cases/errors/persona-errors.js";
+import { Persona } from "../../../../../core/domain/entities/persona.entity.js";
 import {
   AutenticacionLocalRecord,
   GuardarRefreshTokenParams,
@@ -17,8 +17,8 @@ import {
   RevocarRefreshTokenParams,
   SessionDetailRecord,
   SessionRecord,
-} from "@/core/domain/repositories/persona.repository.js";
-import { TipoIdentificadorAcceso } from "@/core/domain/repositories/registro-pendiente.repository.js";
+} from "../../../../../core/domain/repositories/persona.repository.js";
+import { TipoIdentificadorAcceso } from "../../../../../core/domain/repositories/registro-pendiente.repository.js";
 import {
   autenticacionesPersona,
   ingresos,
@@ -28,8 +28,8 @@ import {
   roles,
   rolesPermisos,
   tokensRefresco,
-} from "@/modules/seguridad/infrastructure/drizzle/persona.schema.js";
-import { db } from "@/shared/database/connection.js";
+} from "../persona.schema.js";
+import { db } from "../../../../../shared/database/connection.js";
 
 export class PersonaDrizzleRepository implements PersonaRepository {
   async findAll(): Promise<Persona[]> {

@@ -1,11 +1,11 @@
 import { createHash } from "node:crypto";
-import { CorreoYaVerificadoError } from "@/core/application/use-cases/errors/verificacion-errors.js";
-import { ValidationError } from "@/core/application/use-cases/errors/application-errors.js";
-import { InvalidTokenError } from "@/core/application/use-cases/errors/auth-errors.js";
-import { PersonaRepository } from "@/core/domain/repositories/persona.repository.js";
-import { CodigoVerificacionRepository } from "@/core/domain/repositories/codigo-verificacion.repository.js";
-import { AuditoriaRepository } from "@/core/domain/repositories/auditoria.repository.js";
-import { EmailQueueService } from "@/core/domain/services/email-queue.service.js";
+import { CorreoYaVerificadoError } from "../errors/verificacion-errors.js";
+import { ValidationError } from "../errors/application-errors.js";
+import { InvalidTokenError } from "../errors/auth-errors.js";
+import { PersonaRepository } from "../../../domain/repositories/persona.repository.js";
+import { CodigoVerificacionRepository } from "../../../domain/repositories/codigo-verificacion.repository.js";
+import { AuditoriaRepository } from "../../../domain/repositories/auditoria.repository.js";
+import { EmailQueueService } from "../../../domain/services/email-queue.service.js";
 
 export interface EnviarVerificacionCorreoInput {
   idAutenticacion: string;

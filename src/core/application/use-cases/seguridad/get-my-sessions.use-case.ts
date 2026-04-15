@@ -1,4 +1,4 @@
-import { PersonaRepository, SessionRecord } from "@/core/domain/repositories/persona.repository.js";
+import { PersonaRepository, SessionRecord } from "../../../domain/repositories/persona.repository.js";
 
 export class GetMySessionsUseCase {
   constructor(private readonly repository: PersonaRepository) {}

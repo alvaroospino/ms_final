@@ -5,15 +5,15 @@ import {
   DecodedRefreshToken,
   RefreshTokenPayload,
   RefreshTokenService,
-} from "@/core/domain/services/refresh-token.service.js";
-import { jwtConfig } from "@/shared/config/database.config.js";
+} from "../../core/domain/services/refresh-token.service.js";
+import { jwtConfig } from "../config/database.config.js";
 
 function getExpirationDate(expiresIn: string): Date {
   const now = new Date();
 
   const match = /^(\d+)([mhd])$/.exec(expiresIn);
   if (!match) {
-    throw new Error(`Formato inválido de expiración: ${expiresIn}`);
+    throw new Error(`Formato inv�lido de expiraci�n: ${expiresIn}`);
   }
 
   const value = Number(match[1]);

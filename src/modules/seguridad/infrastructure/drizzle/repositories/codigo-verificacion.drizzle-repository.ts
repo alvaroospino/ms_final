@@ -1,13 +1,13 @@
 import { and, eq, sql } from "drizzle-orm";
-import { DatabaseError } from "@/core/application/use-cases/errors/application-errors.js";
+import { DatabaseError } from "../../../../../core/application/use-cases/errors/application-errors.js";
 import {
   CodigoRecord,
   CodigoVerificacionRepository,
   CrearCodigoParams,
   TipoCodigo,
-} from "@/core/domain/repositories/codigo-verificacion.repository.js";
-import { codigosVerificacion } from "@/modules/seguridad/infrastructure/drizzle/persona.schema.js";
-import { db } from "@/shared/database/connection.js";
+} from "../../../../../core/domain/repositories/codigo-verificacion.repository.js";
+import { codigosVerificacion } from "../persona.schema.js";
+import { db } from "../../../../../shared/database/connection.js";
 
 export class CodigoVerificacionDrizzleRepository implements CodigoVerificacionRepository {
   async crearCodigo(params: CrearCodigoParams): Promise<CodigoRecord> {
@@ -41,7 +41,7 @@ export class CodigoVerificacionDrizzleRepository implements CodigoVerificacionRe
         fechaCreacion: row.fechaCreacion,
       };
     } catch (error) {
-      throw new DatabaseError("No fue posible crear el código de verificación", error);
+      throw new DatabaseError("No fue posible crear el c�digo de verificaci�n", error);
     }
   }
 
@@ -78,7 +78,7 @@ export class CodigoVerificacionDrizzleRepository implements CodigoVerificacionRe
         fechaCreacion: row.fechaCreacion,
       };
     } catch (error) {
-      throw new DatabaseError("No fue posible consultar el código de verificación", error);
+      throw new DatabaseError("No fue posible consultar el c�digo de verificaci�n", error);
     }
   }
 
@@ -99,7 +99,7 @@ export class CodigoVerificacionDrizzleRepository implements CodigoVerificacionRe
 
       return nuevosIntentos;
     } catch (error) {
-      throw new DatabaseError("No fue posible incrementar intentos del código", error);
+      throw new DatabaseError("No fue posible incrementar intentos del c�digo", error);
     }
   }
 
@@ -110,7 +110,7 @@ export class CodigoVerificacionDrizzleRepository implements CodigoVerificacionRe
         .set({ estado: 1, fechaUso: new Date() })
         .where(eq(codigosVerificacion.id, idCodigo));
     } catch (error) {
-      throw new DatabaseError("No fue posible marcar el código como usado", error);
+      throw new DatabaseError("No fue posible marcar el c�digo como usado", error);
     }
   }
 
@@ -127,7 +127,7 @@ export class CodigoVerificacionDrizzleRepository implements CodigoVerificacionRe
           ),
         );
     } catch (error) {
-      throw new DatabaseError("No fue posible invalidar códigos anteriores", error);
+      throw new DatabaseError("No fue posible invalidar c�digos anteriores", error);
     }
   }
 }

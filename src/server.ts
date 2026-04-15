@@ -12,26 +12,26 @@ import {
   DatabaseError,
   ExternalServiceError,
   ValidationError,
-} from "@/core/application/use-cases/errors/application-errors.js";
+} from "./core/application/use-cases/errors/application-errors.js";
 import {
   AccountBlockedError,
   ForbiddenError,
   InvalidCredentialsError,
   InvalidTokenError,
-} from "@/core/application/use-cases/errors/auth-errors.js";
-import { PersonaAlreadyExistsError } from "@/core/application/use-cases/errors/persona-errors.js";
+} from "./core/application/use-cases/errors/auth-errors.js";
+import { PersonaAlreadyExistsError } from "./core/application/use-cases/errors/persona-errors.js";
 import {
   CodigoAgotadoError,
   CodigoInvalidoError,
   CorreoYaVerificadoError,
-} from "@/core/application/use-cases/errors/verificacion-errors.js";
-import { PersonasRoutes } from "@/modules/seguridad/infrastructure/interface/http/routes/personas.routes.js";
-import { AccessControlRoutes } from "@/modules/seguridad/infrastructure/interface/http/routes/access-control.routes.js";
+} from "./core/application/use-cases/errors/verificacion-errors.js";
+import { PersonasRoutes } from "./modules/seguridad/infrastructure/interface/http/routes/personas.routes.js";
+import { AccessControlRoutes } from "./modules/seguridad/infrastructure/interface/http/routes/access-control.routes.js";
 import {
   DuplicateAssignmentError,
   DuplicateCodeError,
   EntityNotFoundError,
-} from "@/core/application/use-cases/errors/access-control-errors.js";
+} from "./core/application/use-cases/errors/access-control-errors.js";
 
 export async function createServer(): Promise<FastifyInstance> {
   const app = Fastify({ logger: true }).withTypeProvider<ZodTypeProvider>();
@@ -54,7 +54,7 @@ export async function createServer(): Promise<FastifyInstance> {
     if (error instanceof ZodError) {
       return reply.status(400).send({
         error: "RequestValidationError",
-        message: "El cuerpo de la solicitud no es válido",
+        message: "El cuerpo de la solicitud no es v�lido",
         issues: error.issues,
       });
     }
@@ -62,7 +62,7 @@ export async function createServer(): Promise<FastifyInstance> {
     if ((error as { validation?: unknown }).validation) {
       return reply.status(400).send({
         error: "RequestValidationError",
-        message: "El cuerpo de la solicitud no es válido",
+        message: "El cuerpo de la solicitud no es v�lido",
         issues: (error as { validation: unknown }).validation,
       });
     }
@@ -135,7 +135,7 @@ export async function createServer(): Promise<FastifyInstance> {
 
     return reply.status(500).send({
       error: "InternalServerError",
-      message: "Ocurrió un error inesperado",
+      message: "Ocurri� un error inesperado",
     });
   });
 

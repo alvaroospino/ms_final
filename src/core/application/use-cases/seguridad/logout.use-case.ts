@@ -1,7 +1,7 @@
-import { InvalidTokenError } from "@/core/application/use-cases/errors/auth-errors.js";
-import { PersonaRepository } from "@/core/domain/repositories/persona.repository.js";
-import { RefreshTokenService } from "@/core/domain/services/refresh-token.service.js";
-import { AuditoriaRepository } from "@/core/domain/repositories/auditoria.repository.js";
+import { InvalidTokenError } from "../errors/auth-errors.js";
+import { PersonaRepository } from "../../../domain/repositories/persona.repository.js";
+import { RefreshTokenService } from "../../../domain/services/refresh-token.service.js";
+import { AuditoriaRepository } from "../../../domain/repositories/auditoria.repository.js";
 
 export interface LogoutInput {
   refreshToken: string;
@@ -26,7 +26,7 @@ export class LogoutUseCase {
     try {
       await this.refreshTokenService.verifyRefreshToken(rawRefreshToken);
     } catch {
-      throw new InvalidTokenError("Refresh token inválido o expirado");
+      throw new InvalidTokenError("Refresh token inv�lido o expirado");
     }
 
     const tokenHash = await this.refreshTokenService.hashToken(rawRefreshToken);

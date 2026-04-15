@@ -1,10 +1,10 @@
-import { ValidationError } from "@/core/application/use-cases/errors/application-errors.js";
-import { CodigoInvalidoError } from "@/core/application/use-cases/errors/verificacion-errors.js";
-import { AuditoriaRepository } from "@/core/domain/repositories/auditoria.repository.js";
-import { PersonaRepository } from "@/core/domain/repositories/persona.repository.js";
-import { RegistroPendienteRepository } from "@/core/domain/repositories/registro-pendiente.repository.js";
-import { PasswordHasherService } from "@/core/domain/services/password-hasher.service.js";
-import { parseAccessIdentifier } from "@/shared/utils/access-identifier.js";
+import { ValidationError } from "../errors/application-errors.js";
+import { CodigoInvalidoError } from "../errors/verificacion-errors.js";
+import { AuditoriaRepository } from "../../../domain/repositories/auditoria.repository.js";
+import { PersonaRepository } from "../../../domain/repositories/persona.repository.js";
+import { RegistroPendienteRepository } from "../../../domain/repositories/registro-pendiente.repository.js";
+import { PasswordHasherService } from "../../../domain/services/password-hasher.service.js";
+import { parseAccessIdentifier } from "../../../../shared/utils/access-identifier.js";
 
 export interface EstablecerClaveRegistroInput {
   identificador: string;

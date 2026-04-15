@@ -1,7 +1,7 @@
 import { and, eq } from "drizzle-orm";
 import { randomUUID } from "node:crypto";
 
-import { DatabaseError } from "@/core/application/use-cases/errors/application-errors.js";
+import { DatabaseError } from "../../../../../core/application/use-cases/errors/application-errors.js";
 import {
   AccessControlRepository,
   AssignPermissionToRoleParams,
@@ -12,15 +12,15 @@ import {
   PersonaRoleRecord,
   RolePermissionRecord,
   RoleRecord,
-} from "@/core/domain/repositories/access-control.repository.js";
+} from "../../../../../core/domain/repositories/access-control.repository.js";
 import {
   permisos,
   personas,
   personasRoles,
   roles,
   rolesPermisos,
-} from "@/modules/seguridad/infrastructure/drizzle/persona.schema.js";
-import { db } from "@/shared/database/connection.js";
+} from "../persona.schema.js";
+import { db } from "../../../../../shared/database/connection.js";
 
 export class AccessControlDrizzleRepository implements AccessControlRepository {
   async createRole(params: CreateRoleParams): Promise<RoleRecord> {

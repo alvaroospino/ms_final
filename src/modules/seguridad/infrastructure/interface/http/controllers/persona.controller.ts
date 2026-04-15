@@ -1,44 +1,44 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 
-import { CountPersonasUseCase } from "@/core/application/use-cases/personas/count-personas.use-case.js";
-import { GetAllPersonasUseCase } from "@/core/application/use-cases/personas/get-all-personas.use-case.js";
-import { CambiarClaveUseCase } from "@/core/application/use-cases/seguridad/cambiar-clave.use-case.js";
-import { ConfirmarVerificacionCorreoUseCase } from "@/core/application/use-cases/seguridad/confirmar-verificacion-correo.use-case.js";
-import { EnviarVerificacionCorreoUseCase } from "@/core/application/use-cases/seguridad/enviar-verificacion-correo.use-case.js";
-import { EstablecerClaveRegistroUseCase } from "@/core/application/use-cases/seguridad/establecer-clave-registro.use-case.js";
-import { GetMySessionDetailUseCase } from "@/core/application/use-cases/seguridad/get-my-session-detail.use-case.js";
-import { GetMySessionsUseCase } from "@/core/application/use-cases/seguridad/get-my-sessions.use-case.js";
-import { IniciarRegistroAccesoUseCase } from "@/core/application/use-cases/seguridad/iniciar-registro-acceso.use-case.js";
-import { LoginPersonaLocalUseCase } from "@/core/application/use-cases/seguridad/login-persona-local.use-case.js";
-import { LogoutGlobalUseCase } from "@/core/application/use-cases/seguridad/logout-global.use-case.js";
-import { LogoutUseCase } from "@/core/application/use-cases/seguridad/logout.use-case.js";
-import { RefreshTokenUseCase } from "@/core/application/use-cases/seguridad/refresh-token.use-case.js";
-import { RestablecerClaveUseCase } from "@/core/application/use-cases/seguridad/restablecer-clave.use-case.js";
-import { SolicitarRecuperacionClaveUseCase } from "@/core/application/use-cases/seguridad/solicitar-recuperacion-clave.use-case.js";
-import { VerificarRegistroAccesoUseCase } from "@/core/application/use-cases/seguridad/verificar-registro-acceso.use-case.js";
-import { AuditoriaDrizzleRepository } from "@/modules/seguridad/infrastructure/drizzle/repositories/auditoria.drizzle-repository.js";
-import { CodigoVerificacionDrizzleRepository } from "@/modules/seguridad/infrastructure/drizzle/repositories/codigo-verificacion.drizzle-repository.js";
-import { PersonaDrizzleRepository } from "@/modules/seguridad/infrastructure/drizzle/repositories/persona.drizzle-repository.js";
-import { RegistroPendienteDrizzleRepository } from "@/modules/seguridad/infrastructure/drizzle/repositories/registro-pendiente.drizzle-repository.js";
-import { CambiarClaveRequestDto } from "@/modules/seguridad/infrastructure/interface/http/dto/request/cambiar-clave.request.dto.js";
-import { ConfirmarVerificacionCorreoRequestDto } from "@/modules/seguridad/infrastructure/interface/http/dto/request/confirmar-verificacion-correo.request.dto.js";
-import { EstablecerClaveRegistroRequestDto } from "@/modules/seguridad/infrastructure/interface/http/dto/request/establecer-clave-registro.request.dto.js";
-import { IniciarRegistroRequestDto } from "@/modules/seguridad/infrastructure/interface/http/dto/request/iniciar-registro.request.dto.js";
-import { LoginPersonaLocalRequestDto } from "@/modules/seguridad/infrastructure/interface/http/dto/request/login-persona-local.request.dto.js";
-import { LogoutRequestDto } from "@/modules/seguridad/infrastructure/interface/http/dto/request/logout.request.dto.js";
-import { RefreshTokenRequestDto } from "@/modules/seguridad/infrastructure/interface/http/dto/request/refresh-token.request.dto.js";
-import { RestablecerClaveRequestDto } from "@/modules/seguridad/infrastructure/interface/http/dto/request/restablecer-clave.request.dto.js";
-import { SolicitarRecuperacionClaveRequestDto } from "@/modules/seguridad/infrastructure/interface/http/dto/request/solicitar-recuperacion-clave.request.dto.js";
-import { VerificarRegistroRequestDto } from "@/modules/seguridad/infrastructure/interface/http/dto/request/verificar-registro.request.dto.js";
-import { PersonaMapper } from "@/modules/seguridad/infrastructure/interface/http/mappers/persona.mapper.js";
-import { RegisterPersonaLocalMapper } from "@/modules/seguridad/infrastructure/interface/http/mappers/register-persona-local.mapper.js";
-import { emailConfig, queueConfig, smsConfig } from "@/shared/config/database.config.js";
-import { InMemoryEmailQueueService } from "@/shared/email/in-memory-email-queue.service.js";
-import { NodemailerEmailService } from "@/shared/email/nodemailer-email.service.js";
-import { HttpSmsService, NoopSmsService } from "@/shared/notifications/http-sms.service.js";
-import { JoseJwtService } from "@/shared/security/jwt.service.js";
-import { JwtRefreshTokenService } from "@/shared/security/refresh-token.service.js";
-import { PasswordHasher } from "@/shared/utils/password-hasher.js";
+import { CountPersonasUseCase } from "../../../../../../core/application/use-cases/personas/count-personas.use-case.js";
+import { GetAllPersonasUseCase } from "../../../../../../core/application/use-cases/personas/get-all-personas.use-case.js";
+import { CambiarClaveUseCase } from "../../../../../../core/application/use-cases/seguridad/cambiar-clave.use-case.js";
+import { ConfirmarVerificacionCorreoUseCase } from "../../../../../../core/application/use-cases/seguridad/confirmar-verificacion-correo.use-case.js";
+import { EnviarVerificacionCorreoUseCase } from "../../../../../../core/application/use-cases/seguridad/enviar-verificacion-correo.use-case.js";
+import { EstablecerClaveRegistroUseCase } from "../../../../../../core/application/use-cases/seguridad/establecer-clave-registro.use-case.js";
+import { GetMySessionDetailUseCase } from "../../../../../../core/application/use-cases/seguridad/get-my-session-detail.use-case.js";
+import { GetMySessionsUseCase } from "../../../../../../core/application/use-cases/seguridad/get-my-sessions.use-case.js";
+import { IniciarRegistroAccesoUseCase } from "../../../../../../core/application/use-cases/seguridad/iniciar-registro-acceso.use-case.js";
+import { LoginPersonaLocalUseCase } from "../../../../../../core/application/use-cases/seguridad/login-persona-local.use-case.js";
+import { LogoutGlobalUseCase } from "../../../../../../core/application/use-cases/seguridad/logout-global.use-case.js";
+import { LogoutUseCase } from "../../../../../../core/application/use-cases/seguridad/logout.use-case.js";
+import { RefreshTokenUseCase } from "../../../../../../core/application/use-cases/seguridad/refresh-token.use-case.js";
+import { RestablecerClaveUseCase } from "../../../../../../core/application/use-cases/seguridad/restablecer-clave.use-case.js";
+import { SolicitarRecuperacionClaveUseCase } from "../../../../../../core/application/use-cases/seguridad/solicitar-recuperacion-clave.use-case.js";
+import { VerificarRegistroAccesoUseCase } from "../../../../../../core/application/use-cases/seguridad/verificar-registro-acceso.use-case.js";
+import { AuditoriaDrizzleRepository } from "../../../drizzle/repositories/auditoria.drizzle-repository.js";
+import { CodigoVerificacionDrizzleRepository } from "../../../drizzle/repositories/codigo-verificacion.drizzle-repository.js";
+import { PersonaDrizzleRepository } from "../../../drizzle/repositories/persona.drizzle-repository.js";
+import { RegistroPendienteDrizzleRepository } from "../../../drizzle/repositories/registro-pendiente.drizzle-repository.js";
+import { CambiarClaveRequestDto } from "../dto/request/cambiar-clave.request.dto.js";
+import { ConfirmarVerificacionCorreoRequestDto } from "../dto/request/confirmar-verificacion-correo.request.dto.js";
+import { EstablecerClaveRegistroRequestDto } from "../dto/request/establecer-clave-registro.request.dto.js";
+import { IniciarRegistroRequestDto } from "../dto/request/iniciar-registro.request.dto.js";
+import { LoginPersonaLocalRequestDto } from "../dto/request/login-persona-local.request.dto.js";
+import { LogoutRequestDto } from "../dto/request/logout.request.dto.js";
+import { RefreshTokenRequestDto } from "../dto/request/refresh-token.request.dto.js";
+import { RestablecerClaveRequestDto } from "../dto/request/restablecer-clave.request.dto.js";
+import { SolicitarRecuperacionClaveRequestDto } from "../dto/request/solicitar-recuperacion-clave.request.dto.js";
+import { VerificarRegistroRequestDto } from "../dto/request/verificar-registro.request.dto.js";
+import { PersonaMapper } from "../mappers/persona.mapper.js";
+import { RegisterPersonaLocalMapper } from "../mappers/register-persona-local.mapper.js";
+import { emailConfig, queueConfig, smsConfig } from "../../../../../../shared/config/database.config.js";
+import { InMemoryEmailQueueService } from "../../../../../../shared/email/in-memory-email-queue.service.js";
+import { NodemailerEmailService } from "../../../../../../shared/email/nodemailer-email.service.js";
+import { HttpSmsService, NoopSmsService } from "../../../../../../shared/notifications/http-sms.service.js";
+import { JoseJwtService } from "../../../../../../shared/security/jwt.service.js";
+import { JwtRefreshTokenService } from "../../../../../../shared/security/refresh-token.service.js";
+import { PasswordHasher } from "../../../../../../shared/utils/password-hasher.js";
 
 export class PersonaController {
   private readonly personaRepo = new PersonaDrizzleRepository();
@@ -353,7 +353,7 @@ export class PersonaController {
       ip: request.ip,
       agenteUsuario: request.headers["user-agent"] ?? null,
     });
-    return reply.status(200).send({ message: "Contraseña restablecida correctamente", data: { success: true } });
+    return reply.status(200).send({ message: "Contrase�a restablecida correctamente", data: { success: true } });
   };
 
   cambiarClave = async (request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> => {
@@ -369,7 +369,7 @@ export class PersonaController {
       ip: request.ip,
       agenteUsuario: request.headers["user-agent"] ?? null,
     });
-    return reply.status(200).send({ message: "Contraseña cambiada correctamente", data: { success: true } });
+    return reply.status(200).send({ message: "Contrase�a cambiada correctamente", data: { success: true } });
   };
 }
 

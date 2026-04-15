@@ -1,5 +1,5 @@
-import { SendVerificationEmailParams } from "@/core/domain/services/email.service.js";
-import { EmailTemplate, escapeHtml, formatExpirationDate } from "@/shared/email/templates/email-template.utils.js";
+import { SendVerificationEmailParams } from "../../../core/domain/services/email.service.js";
+import { EmailTemplate, escapeHtml, formatExpirationDate } from "./email-template.utils.js";
 
 export function buildVerificationEmailTemplate(
   params: SendVerificationEmailParams,

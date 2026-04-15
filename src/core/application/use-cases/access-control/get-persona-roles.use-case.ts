@@ -1,4 +1,4 @@
-import { AccessControlRepository, PersonaRoleRecord } from "@/core/domain/repositories/access-control.repository.js";
+import { AccessControlRepository, PersonaRoleRecord } from "../../../domain/repositories/access-control.repository.js";
 
 export class GetPersonaRolesUseCase {
   constructor(private readonly repository: AccessControlRepository) {}

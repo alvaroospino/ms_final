@@ -1,11 +1,11 @@
-import { PersonaAlreadyExistsError } from "@/core/application/use-cases/errors/persona-errors.js";
-import { ValidationError } from "@/core/application/use-cases/errors/application-errors.js";
+import { PersonaAlreadyExistsError } from "../errors/persona-errors.js";
+import { ValidationError } from "../errors/application-errors.js";
 import {
   PersonaRepository,
   RegistroPersonaLocalResult,
-} from "@/core/domain/repositories/persona.repository.js";
-import { PasswordHasherService } from "@/core/domain/services/password-hasher.service.js";
-import { CorreoElectronico } from "@/core/domain/value-objects/correo-electronico.value-object.js";
+} from "../../../domain/repositories/persona.repository.js";
+import { PasswordHasherService } from "../../../domain/services/password-hasher.service.js";
+import { CorreoElectronico } from "../../../domain/value-objects/correo-electronico.value-object.js";
 
 export interface RegisterPersonaLocalInput {
   nombres: string;
@@ -64,12 +64,12 @@ export class RegisterPersonaLocalUseCase {
     if (!/[A-Za-z]/.test(clave) || !/\d/.test(clave)) {
       issues.push({
         field: "clave",
-        message: "Debe contener al menos una letra y un número",
+        message: "Debe contener al menos una letra y un n�mero",
       });
     }
 
     if (issues.length) {
-      throw new ValidationError(issues, "Los datos de registro no son válidos");
+      throw new ValidationError(issues, "Los datos de registro no son v�lidos");
     }
 
     const existing = await this.repository.findByCorreo(correo);

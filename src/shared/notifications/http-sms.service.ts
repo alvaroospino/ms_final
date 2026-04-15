@@ -1,6 +1,6 @@
-import { ExternalServiceError } from "@/core/application/use-cases/errors/application-errors.js";
-import { SendVerificationSmsParams, SmsService } from "@/core/domain/services/sms.service.js";
-import { smsConfig } from "@/shared/config/database.config.js";
+import { ExternalServiceError } from "../../core/application/use-cases/errors/application-errors.js";
+import { SendVerificationSmsParams, SmsService } from "../../core/domain/services/sms.service.js";
+import { smsConfig } from "../config/database.config.js";
 
 export class HttpSmsService implements SmsService {
   async sendVerificationCode(params: SendVerificationSmsParams): Promise<void> {

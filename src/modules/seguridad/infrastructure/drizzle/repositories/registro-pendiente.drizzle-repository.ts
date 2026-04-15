@@ -1,15 +1,15 @@
 import { and, eq } from "drizzle-orm";
 import { randomUUID } from "node:crypto";
 
-import { DatabaseError } from "@/core/application/use-cases/errors/application-errors.js";
+import { DatabaseError } from "../../../../../core/application/use-cases/errors/application-errors.js";
 import {
   CrearRegistroPendienteParams,
   RegistroPendienteRecord,
   RegistroPendienteRepository,
   TipoIdentificadorAcceso,
-} from "@/core/domain/repositories/registro-pendiente.repository.js";
-import { registrosPendientes } from "@/modules/seguridad/infrastructure/drizzle/persona.schema.js";
-import { db } from "@/shared/database/connection.js";
+} from "../../../../../core/domain/repositories/registro-pendiente.repository.js";
+import { registrosPendientes } from "../persona.schema.js";
+import { db } from "../../../../../shared/database/connection.js";
 
 export class RegistroPendienteDrizzleRepository implements RegistroPendienteRepository {
   async upsert(params: CrearRegistroPendienteParams): Promise<RegistroPendienteRecord> {

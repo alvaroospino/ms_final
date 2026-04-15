@@ -1,7 +1,7 @@
-import { InvalidTokenError } from "@/core/application/use-cases/errors/auth-errors.js";
-import { PersonaRepository } from "@/core/domain/repositories/persona.repository.js";
-import { JwtService } from "@/core/domain/services/jwt.service.js";
-import { RefreshTokenService } from "@/core/domain/services/refresh-token.service.js";
+import { InvalidTokenError } from "../errors/auth-errors.js";
+import { PersonaRepository } from "../../../domain/repositories/persona.repository.js";
+import { JwtService } from "../../../domain/services/jwt.service.js";
+import { RefreshTokenService } from "../../../domain/services/refresh-token.service.js";
 
 export interface RefreshTokenInput {
   refreshToken: string;

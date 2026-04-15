@@ -1,5 +1,5 @@
-import { Persona } from "@/core/domain/entities/persona.entity.js";
-import { TipoIdentificadorAcceso } from "@/core/domain/repositories/registro-pendiente.repository.js";
+import { Persona } from "../entities/persona.entity.js";
+import { TipoIdentificadorAcceso } from "./registro-pendiente.repository.js";
 
 export interface RegistrarPersonaLocalParams {
   nombres: string;

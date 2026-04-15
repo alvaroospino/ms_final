@@ -1,13 +1,13 @@
 import { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import { z } from "zod";
 
-import { AccessControlController } from "@/modules/seguridad/infrastructure/interface/http/controllers/access-control.controller.js";
-import { assignPermissionToRoleRequestSchema } from "@/modules/seguridad/infrastructure/interface/http/dto/request/assign-permission-to-role.request.dto.js";
-import { assignRoleToPersonaRequestSchema } from "@/modules/seguridad/infrastructure/interface/http/dto/request/assign-role-to-persona.request.dto.js";
-import { createPermissionRequestSchema } from "@/modules/seguridad/infrastructure/interface/http/dto/request/create-permission.request.dto.js";
-import { createRoleRequestSchema } from "@/modules/seguridad/infrastructure/interface/http/dto/request/create-role.request.dto.js";
-import { authMiddleware } from "@/shared/security/auth.middleware.js";
-import { requireRoles } from "@/shared/security/authorization.middleware.js";
+import { AccessControlController } from "../controllers/access-control.controller.js";
+import { assignPermissionToRoleRequestSchema } from "../dto/request/assign-permission-to-role.request.dto.js";
+import { assignRoleToPersonaRequestSchema } from "../dto/request/assign-role-to-persona.request.dto.js";
+import { createPermissionRequestSchema } from "../dto/request/create-permission.request.dto.js";
+import { createRoleRequestSchema } from "../dto/request/create-role.request.dto.js";
+import { authMiddleware } from "../../../../../../shared/security/auth.middleware.js";
+import { requireRoles } from "../../../../../../shared/security/authorization.middleware.js";
 
 const personaParamsSchema = z.object({
   idPersona: z.string().min(1),

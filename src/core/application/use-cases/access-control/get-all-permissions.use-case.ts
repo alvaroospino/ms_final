@@ -1,7 +1,7 @@
 import {
   AccessControlRepository,
   PermissionRecord,
-} from "@/core/domain/repositories/access-control.repository.js";
+} from "../../../domain/repositories/access-control.repository.js";
 
 export class GetAllPermissionsUseCase {
   constructor(private readonly repository: AccessControlRepository) {}

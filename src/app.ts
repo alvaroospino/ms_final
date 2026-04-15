@@ -1,9 +1,9 @@
 import "dotenv/config";
 
-import { createServer } from "@/server.js";
-import { appConfig } from "@/shared/config/database.config.js";
-import { testDatabaseConnection } from "@/shared/database/connection.js";
-import { printBanner } from "@/shared/utils/print-banner.js";
+import { createServer } from "./server.js";
+import { appConfig } from "./shared/config/database.config.js";
+import { testDatabaseConnection } from "./shared/database/connection.js";
+import { printBanner } from "./shared/utils/print-banner.js";
 
 async function bootstrap(): Promise<void> {
   try {

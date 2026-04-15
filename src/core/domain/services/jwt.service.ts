@@ -1,4 +1,4 @@
-import { TipoIdentificadorAcceso } from "@/core/domain/repositories/registro-pendiente.repository.js";
+import { TipoIdentificadorAcceso } from "../repositories/registro-pendiente.repository.js";
 
 export interface JwtAccessPayload {
   sub: string;

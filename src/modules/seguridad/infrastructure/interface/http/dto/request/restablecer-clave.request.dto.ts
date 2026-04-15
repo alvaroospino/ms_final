@@ -1,8 +1,8 @@
 import { z } from "zod";
 
 export const restablecerClaveRequestSchema = z.object({
-  correo: z.string().email("El correo debe tener formato v√°lido"),
-  codigo: z.string().min(1, "El c√≥digo es obligatorio"),
+  correo: z.string().email("El correo debe tener formato v·lido"),
+  codigo: z.string().min(1, "El cÛdigo es obligatorio"),
   nuevaClave: z.string().min(8, "La nueva clave debe tener al menos 8 caracteres"),
 });
 

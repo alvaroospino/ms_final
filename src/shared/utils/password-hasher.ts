@@ -1,8 +1,8 @@
 import { randomBytes, scrypt as scryptCallback, timingSafeEqual } from "node:crypto";
 import { promisify } from "node:util";
 
-import { PasswordHasherService } from "@/core/domain/services/password-hasher.service.js";
-import { PasswordVerifierService } from "@/core/domain/services/password-verifier.service.js";
+import { PasswordHasherService } from "../../core/domain/services/password-hasher.service.js";
+import { PasswordVerifierService } from "../../core/domain/services/password-verifier.service.js";
 
 const scrypt = promisify(scryptCallback);
 

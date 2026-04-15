@@ -1,4 +1,4 @@
-import { PersonaResponseDto } from "@/modules/seguridad/infrastructure/interface/http/dto/response/persona.response.dto.js";
+import { PersonaResponseDto } from "./persona.response.dto.js";
 
 export interface RegisterPersonaLocalResponseDto {
   persona: PersonaResponseDto;

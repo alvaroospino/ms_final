@@ -1,13 +1,13 @@
 import { createHash } from "node:crypto";
 
-import { ValidationError } from "@/core/application/use-cases/errors/application-errors.js";
+import { ValidationError } from "../errors/application-errors.js";
 import {
   CodigoAgotadoError,
   CodigoInvalidoError,
-} from "@/core/application/use-cases/errors/verificacion-errors.js";
-import { AuditoriaRepository } from "@/core/domain/repositories/auditoria.repository.js";
-import { RegistroPendienteRepository } from "@/core/domain/repositories/registro-pendiente.repository.js";
-import { parseAccessIdentifier } from "@/shared/utils/access-identifier.js";
+} from "../errors/verificacion-errors.js";
+import { AuditoriaRepository } from "../../../domain/repositories/auditoria.repository.js";
+import { RegistroPendienteRepository } from "../../../domain/repositories/registro-pendiente.repository.js";
+import { parseAccessIdentifier } from "../../../../shared/utils/access-identifier.js";
 
 export interface VerificarRegistroAccesoInput {
   identificador: string;

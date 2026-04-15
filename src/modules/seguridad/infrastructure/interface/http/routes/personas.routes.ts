@@ -1,18 +1,18 @@
 import { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 
-import { PersonaController } from "@/modules/seguridad/infrastructure/interface/http/controllers/persona.controller.js";
-import { cambiarClaveRequestSchema } from "@/modules/seguridad/infrastructure/interface/http/dto/request/cambiar-clave.request.dto.js";
-import { confirmarVerificacionCorreoRequestSchema } from "@/modules/seguridad/infrastructure/interface/http/dto/request/confirmar-verificacion-correo.request.dto.js";
-import { establecerClaveRegistroRequestSchema } from "@/modules/seguridad/infrastructure/interface/http/dto/request/establecer-clave-registro.request.dto.js";
-import { iniciarRegistroRequestSchema } from "@/modules/seguridad/infrastructure/interface/http/dto/request/iniciar-registro.request.dto.js";
-import { loginPersonaLocalRequestSchema } from "@/modules/seguridad/infrastructure/interface/http/dto/request/login-persona-local.request.dto.js";
-import { logoutRequestSchema } from "@/modules/seguridad/infrastructure/interface/http/dto/request/logout.request.dto.js";
-import { refreshTokenRequestSchema } from "@/modules/seguridad/infrastructure/interface/http/dto/request/refresh-token.request.dto.js";
-import { restablecerClaveRequestSchema } from "@/modules/seguridad/infrastructure/interface/http/dto/request/restablecer-clave.request.dto.js";
-import { solicitarRecuperacionClaveRequestSchema } from "@/modules/seguridad/infrastructure/interface/http/dto/request/solicitar-recuperacion-clave.request.dto.js";
-import { verificarRegistroRequestSchema } from "@/modules/seguridad/infrastructure/interface/http/dto/request/verificar-registro.request.dto.js";
-import { authMiddleware } from "@/shared/security/auth.middleware.js";
-import { requirePermissions, requireRoles } from "@/shared/security/authorization.middleware.js";
+import { PersonaController } from "../controllers/persona.controller.js";
+import { cambiarClaveRequestSchema } from "../dto/request/cambiar-clave.request.dto.js";
+import { confirmarVerificacionCorreoRequestSchema } from "../dto/request/confirmar-verificacion-correo.request.dto.js";
+import { establecerClaveRegistroRequestSchema } from "../dto/request/establecer-clave-registro.request.dto.js";
+import { iniciarRegistroRequestSchema } from "../dto/request/iniciar-registro.request.dto.js";
+import { loginPersonaLocalRequestSchema } from "../dto/request/login-persona-local.request.dto.js";
+import { logoutRequestSchema } from "../dto/request/logout.request.dto.js";
+import { refreshTokenRequestSchema } from "../dto/request/refresh-token.request.dto.js";
+import { restablecerClaveRequestSchema } from "../dto/request/restablecer-clave.request.dto.js";
+import { solicitarRecuperacionClaveRequestSchema } from "../dto/request/solicitar-recuperacion-clave.request.dto.js";
+import { verificarRegistroRequestSchema } from "../dto/request/verificar-registro.request.dto.js";
+import { authMiddleware } from "../../../../../../shared/security/auth.middleware.js";
+import { requirePermissions, requireRoles } from "../../../../../../shared/security/authorization.middleware.js";
 
 export const PersonasRoutes: FastifyPluginAsyncZod = async (app): Promise<void> => {
   const controller = new PersonaController();

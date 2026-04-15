@@ -1,5 +1,5 @@
-import { PersonaRepository } from "@/core/domain/repositories/persona.repository.js";
-import { AuditoriaRepository } from "@/core/domain/repositories/auditoria.repository.js";
+import { PersonaRepository } from "../../../domain/repositories/persona.repository.js";
+import { AuditoriaRepository } from "../../../domain/repositories/auditoria.repository.js";
 
 export interface LogoutGlobalInput {
   idPersona: string;

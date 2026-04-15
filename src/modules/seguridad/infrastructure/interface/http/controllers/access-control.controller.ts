@@ -1,20 +1,20 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 
-import { AssignPermissionToRoleUseCase } from "@/core/application/use-cases/access-control/assign-permission-to-role.use-case.js";
-import { AssignRoleToPersonaUseCase } from "@/core/application/use-cases/access-control/assign-role-to-persona.use-case.js";
-import { CreatePermissionUseCase } from "@/core/application/use-cases/access-control/create-permission.use-case.js";
-import { CreateRoleUseCase } from "@/core/application/use-cases/access-control/create-role.use-case.js";
-import { GetAllPermissionsUseCase } from "@/core/application/use-cases/access-control/get-all-permissions.use-case.js";
-import { GetAllRolesUseCase } from "@/core/application/use-cases/access-control/get-all-roles.use-case.js";
-import { GetPersonaRolesUseCase } from "@/core/application/use-cases/access-control/get-persona-roles.use-case.js";
-import { GetRolePermissionsUseCase } from "@/core/application/use-cases/access-control/get-role-permissions.use-case.js";
-import { RemovePermissionFromRoleUseCase } from "@/core/application/use-cases/access-control/remove-permission-from-role.use-case.js";
-import { RemoveRoleFromPersonaUseCase } from "@/core/application/use-cases/access-control/remove-role-from-persona.use-case.js";
-import { AccessControlDrizzleRepository } from "@/modules/seguridad/infrastructure/drizzle/repositories/access-control.drizzle-repository.js";
-import { AssignPermissionToRoleRequestDto } from "@/modules/seguridad/infrastructure/interface/http/dto/request/assign-permission-to-role.request.dto.js";
-import { AssignRoleToPersonaRequestDto } from "@/modules/seguridad/infrastructure/interface/http/dto/request/assign-role-to-persona.request.dto.js";
-import { CreatePermissionRequestDto } from "@/modules/seguridad/infrastructure/interface/http/dto/request/create-permission.request.dto.js";
-import { CreateRoleRequestDto } from "@/modules/seguridad/infrastructure/interface/http/dto/request/create-role.request.dto.js";
+import { AssignPermissionToRoleUseCase } from "../../../../../../core/application/use-cases/access-control/assign-permission-to-role.use-case.js";
+import { AssignRoleToPersonaUseCase } from "../../../../../../core/application/use-cases/access-control/assign-role-to-persona.use-case.js";
+import { CreatePermissionUseCase } from "../../../../../../core/application/use-cases/access-control/create-permission.use-case.js";
+import { CreateRoleUseCase } from "../../../../../../core/application/use-cases/access-control/create-role.use-case.js";
+import { GetAllPermissionsUseCase } from "../../../../../../core/application/use-cases/access-control/get-all-permissions.use-case.js";
+import { GetAllRolesUseCase } from "../../../../../../core/application/use-cases/access-control/get-all-roles.use-case.js";
+import { GetPersonaRolesUseCase } from "../../../../../../core/application/use-cases/access-control/get-persona-roles.use-case.js";
+import { GetRolePermissionsUseCase } from "../../../../../../core/application/use-cases/access-control/get-role-permissions.use-case.js";
+import { RemovePermissionFromRoleUseCase } from "../../../../../../core/application/use-cases/access-control/remove-permission-from-role.use-case.js";
+import { RemoveRoleFromPersonaUseCase } from "../../../../../../core/application/use-cases/access-control/remove-role-from-persona.use-case.js";
+import { AccessControlDrizzleRepository } from "../../../drizzle/repositories/access-control.drizzle-repository.js";
+import { AssignPermissionToRoleRequestDto } from "../dto/request/assign-permission-to-role.request.dto.js";
+import { AssignRoleToPersonaRequestDto } from "../dto/request/assign-role-to-persona.request.dto.js";
+import { CreatePermissionRequestDto } from "../dto/request/create-permission.request.dto.js";
+import { CreateRoleRequestDto } from "../dto/request/create-role.request.dto.js";
 
 export class AccessControlController {
   private readonly repository = new AccessControlDrizzleRepository();

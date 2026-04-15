@@ -1,14 +1,14 @@
 import { createHash } from "node:crypto";
-import { ValidationError } from "@/core/application/use-cases/errors/application-errors.js";
+import { ValidationError } from "../errors/application-errors.js";
 import {
   CodigoAgotadoError,
   CodigoInvalidoError,
-} from "@/core/application/use-cases/errors/verificacion-errors.js";
-import { PersonaRepository } from "@/core/domain/repositories/persona.repository.js";
-import { CodigoVerificacionRepository } from "@/core/domain/repositories/codigo-verificacion.repository.js";
-import { AuditoriaRepository } from "@/core/domain/repositories/auditoria.repository.js";
-import { PasswordHasherService } from "@/core/domain/services/password-hasher.service.js";
-import { CorreoElectronico } from "@/core/domain/value-objects/correo-electronico.value-object.js";
+} from "../errors/verificacion-errors.js";
+import { PersonaRepository } from "../../../domain/repositories/persona.repository.js";
+import { CodigoVerificacionRepository } from "../../../domain/repositories/codigo-verificacion.repository.js";
+import { AuditoriaRepository } from "../../../domain/repositories/auditoria.repository.js";
+import { PasswordHasherService } from "../../../domain/services/password-hasher.service.js";
+import { CorreoElectronico } from "../../../domain/value-objects/correo-electronico.value-object.js";
 
 export interface RestablecerClaveInput {
   correo: string;
@@ -35,7 +35,7 @@ export class RestablecerClaveUseCase {
     try {
       correo = new CorreoElectronico(input.correo).toString();
     } catch {
-      issues.push({ field: "correo", message: "Correo inválido" });
+      issues.push({ field: "correo", message: "Correo inv�lido" });
     }
 
     const nuevaClave = input.nuevaClave.trim();
@@ -43,16 +43,16 @@ export class RestablecerClaveUseCase {
       issues.push({ field: "nuevaClave", message: "Debe tener al menos 8 caracteres" });
     }
     if (!/[A-Za-z]/.test(nuevaClave) || !/\d/.test(nuevaClave)) {
-      issues.push({ field: "nuevaClave", message: "Debe contener al menos una letra y un número" });
+      issues.push({ field: "nuevaClave", message: "Debe contener al menos una letra y un n�mero" });
     }
     if (!input.codigo?.trim()) {
-      issues.push({ field: "codigo", message: "El código es obligatorio" });
+      issues.push({ field: "codigo", message: "El c�digo es obligatorio" });
     }
 
     if (issues.length) throw new ValidationError(issues);
 
     const auth = await this.personaRepo.findAutenticacionLocalByCorreo(correo!);
-    if (!auth) throw new CodigoInvalidoError("Código inválido o expirado");
+    if (!auth) throw new CodigoInvalidoError("C�digo inv�lido o expirado");
 
     const registro = await this.codigoRepo.findCodigoActivoByAutenticacionAndTipo(
       auth.id,
@@ -62,7 +62,7 @@ export class RestablecerClaveUseCase {
     if (!registro) throw new CodigoInvalidoError();
 
     if (registro.fechaExpiracion < new Date()) {
-      throw new CodigoInvalidoError("El código ha expirado");
+      throw new CodigoInvalidoError("El c�digo ha expirado");
     }
 
     if (registro.intentos >= MAX_INTENTOS) {
@@ -73,7 +73,7 @@ export class RestablecerClaveUseCase {
 
     if (hashIngresado !== registro.hashCodigo) {
       await this.codigoRepo.incrementarIntentosCodigo(registro.id);
-      throw new CodigoInvalidoError("Código incorrecto");
+      throw new CodigoInvalidoError("C�digo incorrecto");
     }
 
     const hashClave = await this.passwordHasher.hash(nuevaClave);

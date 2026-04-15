@@ -1,9 +1,9 @@
 import {
   DuplicateAssignmentError,
   EntityNotFoundError,
-} from "@/core/application/use-cases/errors/access-control-errors.js";
-import { ValidationError } from "@/core/application/use-cases/errors/application-errors.js";
-import { AccessControlRepository } from "@/core/domain/repositories/access-control.repository.js";
+} from "../errors/access-control-errors.js";
+import { ValidationError } from "../errors/application-errors.js";
+import { AccessControlRepository } from "../../../domain/repositories/access-control.repository.js";
 
 export interface AssignRoleToPersonaInput {
   idPersona: string;
@@ -39,7 +39,7 @@ export class AssignRoleToPersonaUseCase {
     );
 
     if (alreadyAssigned) {
-      throw new DuplicateAssignmentError("Ese rol ya está asignado a la persona");
+      throw new DuplicateAssignmentError("Ese rol ya est� asignado a la persona");
     }
 
     await this.repository.assignRoleToPersona({

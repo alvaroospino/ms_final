@@ -1,14 +1,14 @@
 import {
   AccountBlockedError,
   InvalidCredentialsError,
-} from "@/core/application/use-cases/errors/auth-errors.js";
-import { ValidationError } from "@/core/application/use-cases/errors/application-errors.js";
-import { AuditoriaRepository } from "@/core/domain/repositories/auditoria.repository.js";
-import { PersonaRepository } from "@/core/domain/repositories/persona.repository.js";
-import { JwtService } from "@/core/domain/services/jwt.service.js";
-import { PasswordVerifierService } from "@/core/domain/services/password-verifier.service.js";
-import { RefreshTokenService } from "@/core/domain/services/refresh-token.service.js";
-import { parseAccessIdentifier } from "@/shared/utils/access-identifier.js";
+} from "../errors/auth-errors.js";
+import { ValidationError } from "../errors/application-errors.js";
+import { AuditoriaRepository } from "../../../domain/repositories/auditoria.repository.js";
+import { PersonaRepository } from "../../../domain/repositories/persona.repository.js";
+import { JwtService } from "../../../domain/services/jwt.service.js";
+import { PasswordVerifierService } from "../../../domain/services/password-verifier.service.js";
+import { RefreshTokenService } from "../../../domain/services/refresh-token.service.js";
+import { parseAccessIdentifier } from "../../../../shared/utils/access-identifier.js";
 
 export interface LoginPersonaLocalInput {
   identificador: string;

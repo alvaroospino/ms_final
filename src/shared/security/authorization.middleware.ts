@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { ForbiddenError } from "@/core/application/use-cases/errors/auth-errors.js";
+import { ForbiddenError } from "../../core/application/use-cases/errors/auth-errors.js";
 
 export function requireRoles(requiredRoles: string[]) {
   return async function (request: FastifyRequest, _reply: FastifyReply): Promise<void> {

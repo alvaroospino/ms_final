@@ -2,8 +2,8 @@ import {
   EmailQueueService,
   QueuePasswordRecoveryEmailParams,
   QueueVerificationEmailParams,
-} from "@/core/domain/services/email-queue.service.js";
-import { EmailService } from "@/core/domain/services/email.service.js";
+} from "../../core/domain/services/email-queue.service.js";
+import { EmailService } from "../../core/domain/services/email.service.js";
 
 type EmailJob =
   | { type: "verification"; payload: QueueVerificationEmailParams }

@@ -1,5 +1,5 @@
-import { TipoIdentificadorAcceso } from "@/core/domain/repositories/registro-pendiente.repository.js";
-import { CorreoElectronico } from "@/core/domain/value-objects/correo-electronico.value-object.js";
+import { TipoIdentificadorAcceso } from "../../core/domain/repositories/registro-pendiente.repository.js";
+import { CorreoElectronico } from "../../core/domain/value-objects/correo-electronico.value-object.js";
 
 export interface AccessIdentifier {
   tipo: TipoIdentificadorAcceso;

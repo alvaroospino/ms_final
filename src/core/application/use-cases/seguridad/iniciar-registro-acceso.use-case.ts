@@ -1,13 +1,13 @@
 import { createHash } from "node:crypto";
 
-import { AuditoriaRepository } from "@/core/domain/repositories/auditoria.repository.js";
-import { PersonaRepository } from "@/core/domain/repositories/persona.repository.js";
-import { RegistroPendienteRepository } from "@/core/domain/repositories/registro-pendiente.repository.js";
-import { EmailQueueService } from "@/core/domain/services/email-queue.service.js";
-import { SmsService } from "@/core/domain/services/sms.service.js";
-import { PersonaAlreadyExistsError } from "@/core/application/use-cases/errors/persona-errors.js";
-import { ValidationError } from "@/core/application/use-cases/errors/application-errors.js";
-import { parseAccessIdentifier } from "@/shared/utils/access-identifier.js";
+import { AuditoriaRepository } from "../../../domain/repositories/auditoria.repository.js";
+import { PersonaRepository } from "../../../domain/repositories/persona.repository.js";
+import { RegistroPendienteRepository } from "../../../domain/repositories/registro-pendiente.repository.js";
+import { EmailQueueService } from "../../../domain/services/email-queue.service.js";
+import { SmsService } from "../../../domain/services/sms.service.js";
+import { PersonaAlreadyExistsError } from "../errors/persona-errors.js";
+import { ValidationError } from "../errors/application-errors.js";
+import { parseAccessIdentifier } from "../../../../shared/utils/access-identifier.js";
 
 export interface IniciarRegistroAccesoInput {
   identificador: string;

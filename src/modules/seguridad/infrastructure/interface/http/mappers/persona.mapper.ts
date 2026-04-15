@@ -1,5 +1,5 @@
-import { Persona } from "@/core/domain/entities/persona.entity.js";
-import { PersonaResponseDto } from "@/modules/seguridad/infrastructure/interface/http/dto/response/persona.response.dto.js";
+import { Persona } from "../../../../../../core/domain/entities/persona.entity.js";
+import { PersonaResponseDto } from "../dto/response/persona.response.dto.js";
 
 export class PersonaMapper {
   static toResponse(entity: Persona): PersonaResponseDto {

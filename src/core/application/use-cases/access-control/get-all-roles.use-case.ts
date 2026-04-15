@@ -1,4 +1,4 @@
-import { AccessControlRepository, RoleRecord } from "@/core/domain/repositories/access-control.repository.js";
+import { AccessControlRepository, RoleRecord } from "../../../domain/repositories/access-control.repository.js";
 
 export class GetAllRolesUseCase {
   constructor(private readonly repository: AccessControlRepository) {}

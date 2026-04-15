@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 
-import { InvalidTokenError } from "@/core/application/use-cases/errors/auth-errors.js";
-import { JoseJwtService } from "@/shared/security/jwt.service.js";
+import { InvalidTokenError } from "../../core/application/use-cases/errors/auth-errors.js";
+import { JoseJwtService } from "./jwt.service.js";
 
 const jwtService = new JoseJwtService();
 

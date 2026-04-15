@@ -1,5 +1,5 @@
-import { ValidationError } from "@/core/application/use-cases/errors/application-errors.js";
-import { AccessControlRepository } from "@/core/domain/repositories/access-control.repository.js";
+import { ValidationError } from "../errors/application-errors.js";
+import { AccessControlRepository } from "../../../domain/repositories/access-control.repository.js";
 
 export class RemovePermissionFromRoleUseCase {
   constructor(private readonly repository: AccessControlRepository) {}

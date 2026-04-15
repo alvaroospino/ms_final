@@ -6,8 +6,8 @@ import {
   DecodedAccessToken,
   JwtAccessPayload,
   JwtService,
-} from "@/core/domain/services/jwt.service.js";
-import { jwtConfig } from "@/shared/config/database.config.js";
+} from "../../core/domain/services/jwt.service.js";
+import { jwtConfig } from "../config/database.config.js";
 
 function getExpirationDate(expiresIn: string): Date {
   const now = new Date();

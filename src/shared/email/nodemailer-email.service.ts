@@ -3,10 +3,10 @@ import {
   EmailService,
   SendPasswordRecoveryEmailParams,
   SendVerificationEmailParams,
-} from "@/core/domain/services/email.service.js";
-import { emailConfig } from "@/shared/config/database.config.js";
-import { buildPasswordRecoveryEmailTemplate } from "@/shared/email/templates/password-recovery-email.template.js";
-import { buildVerificationEmailTemplate } from "@/shared/email/templates/verification-email.template.js";
+} from "../../core/domain/services/email.service.js";
+import { emailConfig } from "../config/database.config.js";
+import { buildPasswordRecoveryEmailTemplate } from "./templates/password-recovery-email.template.js";
+import { buildVerificationEmailTemplate } from "./templates/verification-email.template.js";
 
 export class NodemailerEmailService implements EmailService {
   private readonly transporter = nodemailer.createTransport({

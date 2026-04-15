@@ -2,9 +2,9 @@ import { sql } from "drizzle-orm";
 import {
   AuditoriaRepository,
   RegistrarEventoParams,
-} from "@/core/domain/repositories/auditoria.repository.js";
-import { auditoria } from "@/modules/seguridad/infrastructure/drizzle/persona.schema.js";
-import { db } from "@/shared/database/connection.js";
+} from "../../../../../core/domain/repositories/auditoria.repository.js";
+import { auditoria } from "../persona.schema.js";
+import { db } from "../../../../../shared/database/connection.js";
 
 export class AuditoriaDrizzleRepository implements AuditoriaRepository {
   async registrar(params: RegistrarEventoParams): Promise<void> {
@@ -21,7 +21,7 @@ export class AuditoriaDrizzleRepository implements AuditoriaRepository {
         fecha: new Date(),
       });
     } catch {
-      // La auditoría nunca debe romper el flujo principal
+      // La auditor�a nunca debe romper el flujo principal
     }
   }
 }
