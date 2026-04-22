@@ -2,27 +2,30 @@ import { InvalidTokenError } from "../errors/auth-errors.js";
 import { PersonaRepository } from "../../../domain/repositories/persona.repository.js";
 import { JwtService } from "../../../domain/services/jwt.service.js";
 import { RefreshTokenService } from "../../../domain/services/refresh-token.service.js";
+import { inferEsEmpresaFromRoles } from "../../../../shared/utils/company-role.js";
 
 export interface RefreshTokenInput {
   refreshToken: string;
 }
 
 export interface RefreshTokenResult {
-  accessToken: string;
+  tokenApp: string;
   refreshToken: string;
-  accessTokenExpiresAt: string;
-  refreshTokenExpiresAt: string;
-  persona: {
+  expiraEn: number;
+  refreshExpiraEn: number;
+  esEmpresa: boolean;
+  usuario: {
     id: string;
     nombres: string | null;
     apellidos: string | null;
     nombreCompleto: string | null;
     correo: string | null;
-    celular: string | null;
     identificador: string;
     tipoIdentificador: "correo" | "celular";
     estado: number;
     activa: boolean;
+    roles: string[];
+    permisos: string[];
   };
 }
 
@@ -66,6 +69,13 @@ export class RefreshTokenUseCase {
 
     const roles = await this.repository.findRolesByPersonaId(session.persona.id);
     const permisos = await this.repository.findPermisosByPersonaId(session.persona.id);
+    const nombres = session.persona.nombres;
+    const apellidos = session.persona.apellidos;
+    const nombreCompleto = session.persona.nombreCompleto || null;
+    const activa = session.persona.estaActiva();
+    const roleNames = roles.map((rol) => rol.nombre);
+    const permissionNames = permisos.map((permiso) => permiso.nombre);
+    const esEmpresa = inferEsEmpresaFromRoles(roleNames);
 
     const access = await this.jwtService.generateAccessToken({
       sub: session.persona.id,
@@ -73,8 +83,14 @@ export class RefreshTokenUseCase {
       identificador: session.identificador,
       tipoIdentificador: session.tipoIdentificador,
       correo: session.correo,
-      roles: roles.map((rol) => rol.nombre),
-      permisos: permisos.map((permiso) => permiso.nombre),
+      nombres,
+      apellidos,
+      nombreCompleto,
+      estado: session.persona.estado,
+      activa,
+      esEmpresa,
+      roles: roleNames,
+      permisos: permissionNames,
     });
 
     const refresh = await this.refreshTokenService.generateRefreshToken({
@@ -89,21 +105,23 @@ export class RefreshTokenUseCase {
     });
 
     return {
-      accessToken: access.token,
+      tokenApp: access.token,
       refreshToken: refresh.token,
-      accessTokenExpiresAt: access.expiresAt.toISOString(),
-      refreshTokenExpiresAt: refresh.expiresAt.toISOString(),
-      persona: {
+      expiraEn: access.expiresAt.getTime(),
+      refreshExpiraEn: refresh.expiresAt.getTime(),
+      esEmpresa,
+      usuario: {
         id: session.persona.id,
-        nombres: session.persona.nombres,
-        apellidos: session.persona.apellidos,
-        nombreCompleto: session.persona.nombreCompleto || null,
+        nombres,
+        apellidos,
+        nombreCompleto,
         correo: session.persona.correo,
-        celular: session.persona.celular,
         identificador: session.identificador,
         tipoIdentificador: session.tipoIdentificador,
         estado: session.persona.estado,
-        activa: session.persona.estaActiva(),
+        activa,
+        roles: roleNames,
+        permisos: permissionNames,
       },
     };
   }

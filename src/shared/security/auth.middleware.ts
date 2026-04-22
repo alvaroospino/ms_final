@@ -26,11 +26,19 @@ export async function authMiddleware(
     request.user = {
       sub: payload.sub,
       authId: payload.authId,
+      uuidAcceso: payload.uuidAcceso,
       identificador: payload.identificador,
       tipoIdentificador: payload.tipoIdentificador,
       correo: payload.correo,
+      nombres: payload.nombres,
+      apellidos: payload.apellidos,
+      nombreCompleto: payload.nombreCompleto,
+      estado: payload.estado,
+      activa: payload.activa,
+      esEmpresa: payload.esEmpresa,
       roles: payload.roles,
       permisos: payload.permisos,
+      expiraEn: payload.expiraEn,
     };
   } catch {
     throw new InvalidTokenError("Token invalido o expirado");

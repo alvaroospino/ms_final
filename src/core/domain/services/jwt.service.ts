@@ -6,6 +6,12 @@ export interface JwtAccessPayload {
   identificador: string;
   tipoIdentificador: TipoIdentificadorAcceso;
   correo: string | null;
+  nombres: string | null;
+  apellidos: string | null;
+  nombreCompleto: string | null;
+  estado: number;
+  activa: boolean;
+  esEmpresa: boolean;
   roles: string[];
   permisos: string[];
 }
@@ -20,11 +26,19 @@ export interface JwtTokenPair {
 export interface DecodedAccessToken {
   sub: string;
   authId: string;
+  uuidAcceso: string;
   identificador: string;
   tipoIdentificador: TipoIdentificadorAcceso;
   correo: string | null;
+  nombres: string | null;
+  apellidos: string | null;
+  nombreCompleto: string | null;
+  estado: number;
+  activa: boolean;
+  esEmpresa: boolean;
   roles: string[];
   permisos: string[];
+  expiraEn?: number;
   iss: string;
   iat?: number;
   exp?: number;

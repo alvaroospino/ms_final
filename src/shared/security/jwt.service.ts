@@ -35,11 +35,19 @@ export class JoseJwtService implements JwtService {
 
     const token = await new SignJWT({
       authId: payload.authId,
+      uuidAcceso: payload.authId,
       identificador: payload.identificador,
       tipoIdentificador: payload.tipoIdentificador,
       correo: payload.correo,
+      nombres: payload.nombres,
+      apellidos: payload.apellidos,
+      nombreCompleto: payload.nombreCompleto,
+      estado: payload.estado,
+      activa: payload.activa,
+      esEmpresa: payload.esEmpresa,
       roles: payload.roles,
       permisos: payload.permisos,
+      expiraEn: expiresAt.getTime(),
     })
       .setProtectedHeader({ alg: "HS256", typ: "JWT" })
       .setSubject(payload.sub)
@@ -57,12 +65,21 @@ export class JoseJwtService implements JwtService {
     return {
       sub: String(payload.sub),
       authId: String(payload.authId),
+      uuidAcceso: String(payload.uuidAcceso ?? payload.authId),
       identificador: String(payload.identificador),
       tipoIdentificador:
         payload.tipoIdentificador === "celular" ? "celular" : "correo",
       correo: typeof payload.correo === "string" ? payload.correo : null,
+      nombres: typeof payload.nombres === "string" ? payload.nombres : null,
+      apellidos: typeof payload.apellidos === "string" ? payload.apellidos : null,
+      nombreCompleto:
+        typeof payload.nombreCompleto === "string" ? payload.nombreCompleto : null,
+      estado: typeof payload.estado === "number" ? payload.estado : 0,
+      activa: payload.activa === true,
+      esEmpresa: payload.esEmpresa === true,
       roles: Array.isArray(payload.roles) ? payload.roles.map(String) : [],
       permisos: Array.isArray(payload.permisos) ? payload.permisos.map(String) : [],
+      expiraEn: typeof payload.expiraEn === "number" ? payload.expiraEn : undefined,
       iss: String(payload.iss),
       iat: payload.iat,
       exp: payload.exp,

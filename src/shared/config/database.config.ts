@@ -45,6 +45,12 @@ export const appConfig = {
   host: getEnv("APP_HOST", "0.0.0.0"),
 };
 
+export const appImageConfig = {
+  baseDir: getEnv("APP_IMAGE_BASE_DIR", "storage/app-images"),
+  defaultPersonaImageName: getEnv("APP_DEFAULT_PERSONA_IMAGE_NAME", "persona-default.svg"),
+  defaultEmpresaImageName: getEnv("APP_DEFAULT_EMPRESA_IMAGE_NAME", "empresa-default.svg"),
+};
+
 export const jwtConfig = {
   accessSecret: getEnv("JWT_ACCESS_SECRET"),
   refreshSecret: getEnv("JWT_REFRESH_SECRET"),

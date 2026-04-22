@@ -9,6 +9,7 @@ import { JwtService } from "../../../domain/services/jwt.service.js";
 import { PasswordVerifierService } from "../../../domain/services/password-verifier.service.js";
 import { RefreshTokenService } from "../../../domain/services/refresh-token.service.js";
 import { parseAccessIdentifier } from "../../../../shared/utils/access-identifier.js";
+import { inferEsEmpresaFromRoles } from "../../../../shared/utils/company-role.js";
 
 export interface LoginPersonaLocalInput {
   identificador: string;
@@ -106,6 +107,13 @@ export class LoginPersonaLocalUseCase {
 
     const roles = await this.repository.findRolesByPersonaId(auth.persona.id);
     const permisos = await this.repository.findPermisosByPersonaId(auth.persona.id);
+    const nombres = auth.persona.nombres;
+    const apellidos = auth.persona.apellidos;
+    const nombreCompleto = auth.persona.nombreCompleto || null;
+    const activa = auth.persona.estaActiva();
+    const roleNames = roles.map((rol) => rol.nombre);
+    const permissionNames = permisos.map((permiso) => permiso.nombre);
+    const esEmpresa = inferEsEmpresaFromRoles(roleNames);
 
     const access = await this.jwtService.generateAccessToken({
       sub: auth.persona.id,
@@ -113,8 +121,14 @@ export class LoginPersonaLocalUseCase {
       identificador: auth.identificador,
       tipoIdentificador: auth.tipoIdentificador,
       correo: auth.correo,
-      roles: roles.map((rol) => rol.nombre),
-      permisos: permisos.map((permiso) => permiso.nombre),
+      nombres,
+      apellidos,
+      nombreCompleto,
+      estado: auth.persona.estado,
+      activa,
+      esEmpresa,
+      roles: roleNames,
+      permisos: permissionNames,
     });
 
     const refresh = await this.refreshTokenService.generateRefreshToken({
@@ -139,22 +153,24 @@ export class LoginPersonaLocalUseCase {
     });
 
     return {
-      persona: {
+      tokenApp: access.token,
+      refreshToken: refresh.token,
+      expiraEn: access.expiresAt.getTime(),
+      refreshExpiraEn: refresh.expiresAt.getTime(),
+      esEmpresa,
+      usuario: {
         id: auth.persona.id,
-        nombres: auth.persona.nombres,
-        apellidos: auth.persona.apellidos,
-        nombreCompleto: auth.persona.nombreCompleto || null,
+        nombres,
+        apellidos,
+        nombreCompleto,
         correo: auth.persona.correo,
-        celular: auth.persona.celular,
         identificador: auth.identificador,
         tipoIdentificador: auth.tipoIdentificador,
         estado: auth.persona.estado,
-        activa: auth.persona.estaActiva(),
+        activa,
+        roles: roleNames,
+        permisos: permissionNames,
       },
-      accessToken: access.token,
-      refreshToken: refresh.token,
-      accessTokenExpiresAt: access.expiresAt.toISOString(),
-      refreshTokenExpiresAt: refresh.expiresAt.toISOString(),
       ingreso: {
         id: ingreso.idIngreso,
         fechaInicio: ingreso.fechaInicio.toISOString(),

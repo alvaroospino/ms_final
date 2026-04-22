@@ -151,3 +151,77 @@
 2026-04-15 11:43:39 -05:00: {"level":30,"time":1776271419807,"pid":10708,"hostname":"DESKTOP-PB9K3UF","reqId":"req-6","req":{"method":"POST","url":"/api/auth/login-local","hostname":"seguridad.spartanfitsystem.com","remoteAddress":"127.0.0.1","remotePort":64669},"msg":"incoming request"}
 2026-04-15 11:43:39 -05:00: {"level":50,"time":1776271419811,"pid":10708,"hostname":"DESKTOP-PB9K3UF","err":{"type":"ZodError","message":"[\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"identificador\"\n    ],\n    \"message\": \"Required\"\n  }\n]","stack":"ZodError: [\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"identificador\"\n    ],\n    \"message\": \"Required\"\n  }\n]\n    at get error (file:///C:/Users/Usuario/Documents/PROYECTOS/ms-final/ms-final/node_modules/zod/v3/types.js:39:31)\n    at ZodObject.parse (file:///C:/Users/Usuario/Documents/PROYECTOS/ms-final/ms-final/node_modules/zod/v3/types.js:114:22)\n    at C:\\Users\\Usuario\\Documents\\PROYECTOS\\ms-final\\ms-final\\node_modules\\fastify-type-provider-zod\\dist\\index.js:68:32\n    at validateParam (C:\\Users\\Usuario\\Documents\\PROYECTOS\\ms-final\\ms-final\\node_modules\\fastify\\lib\\validation.js:120:36)\n    at validate (C:\\Users\\Usuario\\Documents\\PROYECTOS\\ms-final\\ms-final\\node_modules\\fastify\\lib\\validation.js:164:18)\n    at preValidationCallback (C:\\Users\\Usuario\\Documents\\PROYECTOS\\ms-final\\ms-final\\node_modules\\fastify\\lib\\handleRequest.js:93:25)\n    at handler (C:\\Users\\Usuario\\Documents\\PROYECTOS\\ms-final\\ms-final\\node_modules\\fastify\\lib\\handleRequest.js:77:7)\n    at C:\\Users\\Usuario\\Documents\\PROYECTOS\\ms-final\\ms-final\\node_modules\\fastify\\lib\\contentTypeParser.js:199:9\n    at AsyncResource.runInAsyncScope (node:async_hooks:228:14)\n    at done (C:\\Users\\Usuario\\Documents\\PROYECTOS\\ms-final\\ms-final\\node_modules\\fastify\\lib\\contentTypeParser.js:192:14)","aggregateErrors":[{"type":"Object","message":"Required","stack":"","code":"invalid_type","expected":"string","received":"undefined","path":["identificador"]}],"issues":[{"code":"invalid_type","expected":"string","received":"undefined","path":["identificador"],"message":"Required"}],"name":"ZodError","statusCode":400,"code":"FST_ERR_VALIDATION","validationContext":"body"},"msg":"[\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"identificador\"\n    ],\n    \"message\": \"Required\"\n  }\n]"}
 2026-04-15 11:43:39 -05:00: {"level":30,"time":1776271419814,"pid":10708,"hostname":"DESKTOP-PB9K3UF","reqId":"req-6","res":{"statusCode":400},"responseTime":6.758900000248104,"msg":"request completed"}
+2026-04-15 11:57:22 -05:00: {"level":30,"time":1776272242362,"pid":10708,"hostname":"DESKTOP-PB9K3UF","reqId":"req-7","req":{"method":"POST","url":"/api/auth/login-local","hostname":"seguridad.spartanfitsystem.com","remoteAddress":"127.0.0.1","remotePort":53811},"msg":"incoming request"}
+2026-04-15 11:57:22 -05:00: {"level":30,"time":1776272242556,"pid":10708,"hostname":"DESKTOP-PB9K3UF","reqId":"req-7","res":{"statusCode":200},"responseTime":193.74589999997988,"msg":"request completed"}
+2026-04-16 08:22:58 -05:00: Base de datos conectada correctamente
+2026-04-16 08:22:59 -05:00: ==========================================
+2026-04-16 08:22:59 -05:00: {"level":30,"time":1776345779018,"pid":11708,"hostname":"DESKTOP-PB9K3UF","msg":"Server listening at http://0.0.0.0:3030"}
+2026-04-16 08:22:59 -05:00:  Microservicio de Seguridad / Autenticación
+2026-04-16 08:22:59 -05:00:  PAYGO
+2026-04-16 08:22:59 -05:00:  Puerto: 3030
+2026-04-16 08:22:59 -05:00: ==========================================
+2026-04-16 08:28:06 -05:00: Base de datos conectada correctamente
+2026-04-16 08:28:06 -05:00: {"level":30,"time":1776346086297,"pid":13996,"hostname":"DESKTOP-PB9K3UF","msg":"Server listening at http://0.0.0.0:3030"}
+2026-04-16 08:28:06 -05:00: ==========================================
+2026-04-16 08:28:06 -05:00:  Microservicio de Seguridad / Autenticación
+2026-04-16 08:28:06 -05:00:  PAYGO
+2026-04-16 08:28:06 -05:00:  Puerto: 3030
+2026-04-16 08:28:06 -05:00: ==========================================
+2026-04-16 08:34:11 -05:00: {"level":30,"time":1776346451281,"pid":13996,"hostname":"DESKTOP-PB9K3UF","reqId":"req-1","req":{"method":"POST","url":"/api/auth/login-local","hostname":"seguridad.spartanfitsystem.com","remoteAddress":"127.0.0.1","remotePort":63315},"msg":"incoming request"}
+2026-04-16 08:34:11 -05:00: {"level":30,"time":1776346451654,"pid":13996,"hostname":"DESKTOP-PB9K3UF","reqId":"req-1","res":{"statusCode":200},"responseTime":373.11349999997765,"msg":"request completed"}
+2026-04-17 00:45:09 -05:00: Base de datos conectada correctamente
+2026-04-17 00:45:09 -05:00: {"level":30,"time":1776404709251,"pid":11600,"hostname":"DESKTOP-PB9K3UF","msg":"Server listening at http://0.0.0.0:3030"}
+2026-04-17 00:45:09 -05:00: ==========================================
+2026-04-17 00:45:09 -05:00:  Microservicio de Seguridad / Autenticación
+2026-04-17 00:45:09 -05:00:  PAYGO
+2026-04-17 00:45:09 -05:00:  Puerto: 3030
+2026-04-17 00:45:09 -05:00: ==========================================
+2026-04-18 01:53:11 -05:00: Base de datos conectada correctamente
+2026-04-18 01:53:11 -05:00: {"level":30,"time":1776495191248,"pid":5432,"hostname":"DESKTOP-PB9K3UF","msg":"Server listening at http://0.0.0.0:3030"}
+2026-04-18 01:53:11 -05:00: ==========================================
+2026-04-18 01:53:11 -05:00:  Microservicio de Seguridad / Autenticación
+2026-04-18 01:53:11 -05:00:  PAYGO
+2026-04-18 01:53:11 -05:00:  Puerto: 3030
+2026-04-18 01:53:11 -05:00: ==========================================
+2026-04-18 12:39:33 -05:00: Base de datos conectada correctamente
+2026-04-18 12:39:33 -05:00: {"level":30,"time":1776533973753,"pid":10792,"hostname":"DESKTOP-PB9K3UF","msg":"Server listening at http://0.0.0.0:3030"}
+2026-04-18 12:39:33 -05:00: ==========================================
+2026-04-18 12:39:33 -05:00:  Microservicio de Seguridad / Autenticación
+2026-04-18 12:39:33 -05:00:  PAYGO
+2026-04-18 12:39:33 -05:00:  Puerto: 3030
+2026-04-18 12:39:33 -05:00: ==========================================
+2026-04-18 22:03:48 -05:00: Base de datos conectada correctamente
+2026-04-18 22:03:48 -05:00: {"level":30,"time":1776567828775,"pid":11216,"hostname":"DESKTOP-PB9K3UF","msg":"Server listening at http://0.0.0.0:3030"}
+2026-04-18 22:03:48 -05:00: ==========================================
+2026-04-18 22:03:48 -05:00:  Microservicio de Seguridad / Autenticación
+2026-04-18 22:03:48 -05:00:  PAYGO
+2026-04-18 22:03:48 -05:00:  Puerto: 3030
+2026-04-18 22:03:48 -05:00: ==========================================
+2026-04-19 03:52:48 -05:00: Base de datos conectada correctamente
+2026-04-19 03:52:48 -05:00: {"level":30,"time":1776588768961,"pid":11344,"hostname":"DESKTOP-PB9K3UF","msg":"Server listening at http://0.0.0.0:3030"}
+2026-04-19 03:52:48 -05:00: ==========================================
+2026-04-19 03:52:48 -05:00:  Microservicio de Seguridad / Autenticación
+2026-04-19 03:52:48 -05:00:  PAYGO
+2026-04-19 03:52:48 -05:00:  Puerto: 3030
+2026-04-19 03:52:48 -05:00: ==========================================
+2026-04-19 19:08:54 -05:00: Base de datos conectada correctamente
+2026-04-19 19:08:54 -05:00: {"level":30,"time":1776643734855,"pid":6752,"hostname":"DESKTOP-PB9K3UF","msg":"Server listening at http://0.0.0.0:3030"}
+2026-04-19 19:08:54 -05:00: ==========================================
+2026-04-19 19:08:54 -05:00:  Microservicio de Seguridad / Autenticación
+2026-04-19 19:08:54 -05:00:  PAYGO
+2026-04-19 19:08:54 -05:00:  Puerto: 3030
+2026-04-19 19:08:54 -05:00: ==========================================
+2026-04-20 20:19:04 -05:00: Base de datos conectada correctamente
+2026-04-20 20:19:04 -05:00: {"level":30,"time":1776734344826,"pid":10660,"hostname":"DESKTOP-PB9K3UF","msg":"Server listening at http://0.0.0.0:3030"}
+2026-04-20 20:19:04 -05:00: ==========================================
+2026-04-20 20:19:04 -05:00:  Microservicio de Seguridad / Autenticación
+2026-04-20 20:19:04 -05:00:  PAYGO
+2026-04-20 20:19:04 -05:00:  Puerto: 3030
+2026-04-20 20:19:04 -05:00: ==========================================
+2026-04-22 00:18:46 -05:00: Base de datos conectada correctamente
+2026-04-22 00:18:47 -05:00: {"level":30,"time":1776835127040,"pid":3464,"hostname":"DESKTOP-PB9K3UF","msg":"Server listening at http://0.0.0.0:3030"}
+2026-04-22 00:18:47 -05:00: ==========================================
+2026-04-22 00:18:47 -05:00:  Microservicio de Seguridad / Autenticación
+2026-04-22 00:18:47 -05:00:  PAYGO
+2026-04-22 00:18:47 -05:00:  Puerto: 3030
+2026-04-22 00:18:47 -05:00: ==========================================

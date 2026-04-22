@@ -39,6 +39,7 @@ import { HttpSmsService, NoopSmsService } from "../../../../../../shared/notific
 import { JoseJwtService } from "../../../../../../shared/security/jwt.service.js";
 import { JwtRefreshTokenService } from "../../../../../../shared/security/refresh-token.service.js";
 import { PasswordHasher } from "../../../../../../shared/utils/password-hasher.js";
+import { buildAuthSuccessResponse } from "../../../../../../shared/http/api-response.js";
 
 export class PersonaController {
   private readonly personaRepo = new PersonaDrizzleRepository();
@@ -193,13 +194,29 @@ export class PersonaController {
       agenteUsuario: request.headers["user-agent"] ?? null,
       dispositivo: null,
     });
-    return reply.status(200).send({ message: "Inicio de sesion exitoso", data: result });
+    return reply.status(200).send(
+      await buildAuthSuccessResponse(200, "Autenticacion exitosa", {
+        tokenApp: result.tokenApp,
+        refreshToken: result.refreshToken,
+        expiraEn: result.expiraEn,
+        refreshExpiraEn: result.refreshExpiraEn,
+        esEmpresa: result.esEmpresa,
+      }),
+    );
   };
 
   refreshToken = async (request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> => {
     const body = request.body as RefreshTokenRequestDto;
     const result = await this.refreshTokenUseCase.execute(body);
-    return reply.status(200).send({ message: "Token refrescado correctamente", data: result });
+    return reply.status(200).send(
+      await buildAuthSuccessResponse(200, "Token refrescado correctamente", {
+        tokenApp: result.tokenApp,
+        refreshToken: result.refreshToken,
+        expiraEn: result.expiraEn,
+        refreshExpiraEn: result.refreshExpiraEn,
+        esEmpresa: result.esEmpresa,
+      }),
+    );
   };
 
   logout = async (request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> => {
@@ -240,11 +257,19 @@ export class PersonaController {
       data: {
         id: request.user.sub,
         authId: request.user.authId,
+        uuidAcceso: request.user.uuidAcceso,
         identificador: request.user.identificador,
         tipoIdentificador: request.user.tipoIdentificador,
         correo: request.user.correo,
+        nombres: request.user.nombres,
+        apellidos: request.user.apellidos,
+        nombreCompleto: request.user.nombreCompleto,
+        estado: request.user.estado,
+        activa: request.user.activa,
+        esEmpresa: request.user.esEmpresa,
         roles: request.user.roles,
         permisos: request.user.permisos,
+        expiraEn: request.user.expiraEn,
       },
     });
   };
