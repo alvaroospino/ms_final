@@ -18,7 +18,10 @@ export type EventoAuditoria =
   | "remocion_rol"
   | "asignacion_permiso"
   | "remocion_permiso"
-  | "logout_global";
+  | "logout_global"
+  | "solicitud_codigo_login"
+  | "login_codigo_exitoso"
+  | "login_codigo_fallido";
 
 export interface RegistrarEventoParams {
   idPersona?: string | null;
