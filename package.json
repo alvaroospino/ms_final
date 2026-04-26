@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "tsx watch src/app.ts",
     "build": "tsc",
-    "start": "node dist/app.js"
+    "start": "node dist/app.js",
+    "migrate": "node scripts/migrate.js"
   },
   "dependencies": {
     "@fastify/cors": "^9.0.1",
