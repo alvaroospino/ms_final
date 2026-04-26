@@ -18,16 +18,11 @@ export class HttpSmsService implements SmsService {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          ...(smsConfig.token ? { Authorization: `Bearer ${smsConfig.token}` } : {}),
+          ...(smsConfig.apiKey ? { "X-API-KEY": smsConfig.apiKey } : {}),
         },
         body: JSON.stringify({
-          to: params.to,
-          message: `Tu codigo de verificacion es ${params.code}. Expira en ${params.expiresInMinutes} minutos.`,
-          channel: "sms",
-          metadata: {
-            code: params.code,
-            expiresAt: params.expiresAt.toISOString(),
-          },
+          destinatario: params.to,
+          contenido: `Tu codigo de verificacion es ${params.code}. Expira en ${params.expiresInMinutes} minutos.`,
         }),
         signal: controller.signal,
       });

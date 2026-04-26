@@ -76,6 +76,7 @@ export interface PersonaRepository {
     identificador: string,
   ): Promise<AutenticacionLocalRecord | null>;
   findAutenticacionById(idAutenticacion: string): Promise<AutenticacionLocalRecord | null>;
+  findAutenticacionByPersonaId(idPersona: string): Promise<AutenticacionLocalRecord | null>;
   incrementarIntentosFallidos(idAutenticacion: string): Promise<number>;
   reiniciarIntentosFallidosYActualizarIngreso(idAutenticacion: string): Promise<void>;
   bloquearAutenticacion(idAutenticacion: string, bloqueadoHasta: Date): Promise<void>;

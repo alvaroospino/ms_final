@@ -6,6 +6,8 @@ import { confirmarVerificacionCorreoRequestSchema } from "../dto/request/confirm
 import { establecerClaveRegistroRequestSchema } from "../dto/request/establecer-clave-registro.request.dto.js";
 import { iniciarRegistroRequestSchema } from "../dto/request/iniciar-registro.request.dto.js";
 import { loginPersonaLocalRequestSchema } from "../dto/request/login-persona-local.request.dto.js";
+import { solicitarCodigoLoginRequestSchema } from "../dto/request/solicitar-codigo-login.request.dto.js";
+import { verificarCodigoLoginRequestSchema } from "../dto/request/verificar-codigo-login.request.dto.js";
 import { logoutRequestSchema } from "../dto/request/logout.request.dto.js";
 import { refreshTokenRequestSchema } from "../dto/request/refresh-token.request.dto.js";
 import { restablecerClaveRequestSchema } from "../dto/request/restablecer-clave.request.dto.js";
@@ -19,6 +21,7 @@ export const PersonasRoutes: FastifyPluginAsyncZod = async (app): Promise<void> 
 
   app.get("/api/personas", { preHandler: [authMiddleware] }, controller.getAll);
   app.get("/api/personas/count", controller.count);
+  app.get("/api/personas/:id", { preHandler: [authMiddleware] }, controller.getById);
 
   app.post(
     "/api/auth/register/iniciar",
@@ -42,6 +45,18 @@ export const PersonasRoutes: FastifyPluginAsyncZod = async (app): Promise<void> 
     "/api/auth/login-local",
     { schema: { body: loginPersonaLocalRequestSchema } },
     controller.loginLocal,
+  );
+
+  app.post(
+    "/api/auth/login/solicitar-codigo",
+    { schema: { body: solicitarCodigoLoginRequestSchema } },
+    controller.solicitarCodigoLogin,
+  );
+
+  app.post(
+    "/api/auth/login/verificar-codigo",
+    { schema: { body: verificarCodigoLoginRequestSchema } },
+    controller.verificarCodigoLogin,
   );
 
   app.post(

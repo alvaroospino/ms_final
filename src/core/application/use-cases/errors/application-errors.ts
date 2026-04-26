@@ -36,3 +36,11 @@ export class DatabaseError extends Error {
     Object.setPrototypeOf(this, DatabaseError.prototype);
   }
 }
+
+export class NotFoundError extends Error {
+  constructor(message = "Recurso no encontrado") {
+    super(message);
+    this.name = "NotFoundError";
+    Object.setPrototypeOf(this, NotFoundError.prototype);
+  }
+}

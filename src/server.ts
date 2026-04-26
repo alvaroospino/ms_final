@@ -11,6 +11,7 @@ import { ZodError } from "zod";
 import {
   DatabaseError,
   ExternalServiceError,
+  NotFoundError,
   ValidationError,
 } from "./core/application/use-cases/errors/application-errors.js";
 import {
@@ -117,7 +118,7 @@ export async function createServer(): Promise<FastifyInstance> {
       return reply.status(403).send({ error: error.name, message: error.message });
     }
 
-    if (error instanceof EntityNotFoundError) {
+    if (error instanceof EntityNotFoundError || error instanceof NotFoundError) {
       return reply.status(404).send({ error: error.name, message: error.message });
     }
 

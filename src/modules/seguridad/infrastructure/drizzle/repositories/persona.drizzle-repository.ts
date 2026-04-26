@@ -249,6 +249,23 @@ export class PersonaDrizzleRepository implements PersonaRepository {
     }
   }
 
+  async findAutenticacionByPersonaId(idPersona: string): Promise<AutenticacionLocalRecord | null> {
+    try {
+      const rows = await this.selectAutenticacionBase()
+        .where(
+          and(
+            eq(personas.id, idPersona),
+            eq(autenticacionesPersona.proveedor, "local"),
+          ),
+        )
+        .limit(1);
+
+      return rows[0] ? this.mapAutenticacion(rows[0]) : null;
+    } catch (error) {
+      throw new DatabaseError("No fue posible consultar la autenticacion por id de persona", error);
+    }
+  }
+
   async incrementarIntentosFallidos(idAutenticacion: string): Promise<number> {
     try {
       const actual = await db

@@ -77,6 +77,6 @@ export const queueConfig = {
 export const smsConfig = {
   provider: getEnv("SMS_PROVIDER", "noop"),
   endpoint: getOptionalEnv("SMS_ENDPOINT"),
-  token: getOptionalEnv("SMS_TOKEN"),
+  apiKey: getOptionalEnv("SMS_API_KEY"),
   timeoutMs: getNumberEnv("SMS_TIMEOUT_MS", "5000"),
 };

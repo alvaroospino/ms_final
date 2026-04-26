@@ -2,6 +2,7 @@ import { FastifyReply, FastifyRequest } from "fastify";
 
 import { CountPersonasUseCase } from "../../../../../../core/application/use-cases/personas/count-personas.use-case.js";
 import { GetAllPersonasUseCase } from "../../../../../../core/application/use-cases/personas/get-all-personas.use-case.js";
+import { GetPersonaByIdUseCase } from "../../../../../../core/application/use-cases/personas/get-persona-by-id.use-case.js";
 import { CambiarClaveUseCase } from "../../../../../../core/application/use-cases/seguridad/cambiar-clave.use-case.js";
 import { ConfirmarVerificacionCorreoUseCase } from "../../../../../../core/application/use-cases/seguridad/confirmar-verificacion-correo.use-case.js";
 import { EnviarVerificacionCorreoUseCase } from "../../../../../../core/application/use-cases/seguridad/enviar-verificacion-correo.use-case.js";
@@ -10,6 +11,8 @@ import { GetMySessionDetailUseCase } from "../../../../../../core/application/us
 import { GetMySessionsUseCase } from "../../../../../../core/application/use-cases/seguridad/get-my-sessions.use-case.js";
 import { IniciarRegistroAccesoUseCase } from "../../../../../../core/application/use-cases/seguridad/iniciar-registro-acceso.use-case.js";
 import { LoginPersonaLocalUseCase } from "../../../../../../core/application/use-cases/seguridad/login-persona-local.use-case.js";
+import { SolicitarCodigoLoginUseCase } from "../../../../../../core/application/use-cases/seguridad/solicitar-codigo-login.use-case.js";
+import { VerificarCodigoLoginUseCase } from "../../../../../../core/application/use-cases/seguridad/verificar-codigo-login.use-case.js";
 import { LogoutGlobalUseCase } from "../../../../../../core/application/use-cases/seguridad/logout-global.use-case.js";
 import { LogoutUseCase } from "../../../../../../core/application/use-cases/seguridad/logout.use-case.js";
 import { RefreshTokenUseCase } from "../../../../../../core/application/use-cases/seguridad/refresh-token.use-case.js";
@@ -25,6 +28,8 @@ import { ConfirmarVerificacionCorreoRequestDto } from "../dto/request/confirmar-
 import { EstablecerClaveRegistroRequestDto } from "../dto/request/establecer-clave-registro.request.dto.js";
 import { IniciarRegistroRequestDto } from "../dto/request/iniciar-registro.request.dto.js";
 import { LoginPersonaLocalRequestDto } from "../dto/request/login-persona-local.request.dto.js";
+import { SolicitarCodigoLoginRequestDto } from "../dto/request/solicitar-codigo-login.request.dto.js";
+import { VerificarCodigoLoginRequestDto } from "../dto/request/verificar-codigo-login.request.dto.js";
 import { LogoutRequestDto } from "../dto/request/logout.request.dto.js";
 import { RefreshTokenRequestDto } from "../dto/request/refresh-token.request.dto.js";
 import { RestablecerClaveRequestDto } from "../dto/request/restablecer-clave.request.dto.js";
@@ -52,6 +57,7 @@ export class PersonaController {
 
   private readonly getAllPersonasUseCase = new GetAllPersonasUseCase(this.personaRepo);
   private readonly countPersonasUseCase = new CountPersonasUseCase(this.personaRepo);
+  private readonly getPersonaByIdUseCase = new GetPersonaByIdUseCase(this.personaRepo);
 
   private readonly iniciarRegistroAccesoUseCase = new IniciarRegistroAccesoUseCase(
     this.personaRepo,
@@ -79,6 +85,22 @@ export class PersonaController {
     new JoseJwtService(),
     new JwtRefreshTokenService(),
     this.auditoriaRepo,
+  );
+
+  private readonly solicitarCodigoLoginUseCase = new SolicitarCodigoLoginUseCase(
+    this.personaRepo,
+    this.codigoRepo,
+    this.auditoriaRepo,
+    this.emailQueue,
+    this.smsService,
+  );
+
+  private readonly verificarCodigoLoginUseCase = new VerificarCodigoLoginUseCase(
+    this.personaRepo,
+    this.codigoRepo,
+    this.auditoriaRepo,
+    new JoseJwtService(),
+    new JwtRefreshTokenService(),
   );
 
   private readonly refreshTokenUseCase = new RefreshTokenUseCase(
@@ -144,6 +166,12 @@ export class PersonaController {
     return reply.status(200).send({ total });
   };
 
+  getById = async (request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> => {
+    const params = request.params as { id: string };
+    const result = await this.getPersonaByIdUseCase.execute(params.id);
+    return reply.status(200).send({ message: "Persona consultada correctamente", data: result });
+  };
+
   iniciarRegistro = async (request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> => {
     const body = request.body as IniciarRegistroRequestDto;
     const result = await this.iniciarRegistroAccesoUseCase.execute({
@@ -189,6 +217,41 @@ export class PersonaController {
   loginLocal = async (request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> => {
     const body = request.body as LoginPersonaLocalRequestDto;
     const result = await this.loginPersonaLocalUseCase.execute({
+      ...body,
+      ip: request.ip,
+      agenteUsuario: request.headers["user-agent"] ?? null,
+      dispositivo: null,
+    });
+    return reply.status(200).send(
+      await buildAuthSuccessResponse(200, "Autenticacion exitosa", {
+        tokenApp: result.tokenApp,
+        refreshToken: result.refreshToken,
+        expiraEn: result.expiraEn,
+        refreshExpiraEn: result.refreshExpiraEn,
+        esEmpresa: result.esEmpresa,
+      }),
+    );
+  };
+
+  solicitarCodigoLogin = async (
+    request: FastifyRequest,
+    reply: FastifyReply,
+  ): Promise<FastifyReply> => {
+    const body = request.body as SolicitarCodigoLoginRequestDto;
+    const result = await this.solicitarCodigoLoginUseCase.execute({
+      identificador: body.identificador,
+      ip: request.ip,
+      agenteUsuario: request.headers["user-agent"] ?? null,
+    });
+    return reply.status(200).send({ message: result.mensaje, data: result });
+  };
+
+  verificarCodigoLogin = async (
+    request: FastifyRequest,
+    reply: FastifyReply,
+  ): Promise<FastifyReply> => {
+    const body = request.body as VerificarCodigoLoginRequestDto;
+    const result = await this.verificarCodigoLoginUseCase.execute({
       ...body,
       ip: request.ip,
       agenteUsuario: request.headers["user-agent"] ?? null,
