@@ -4,7 +4,9 @@ import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const sql = readFileSync(join(__dirname, "../db_is_seguridad.sql"), "utf8");
+const dbUser = process.env.DB_USER ?? "postgres";
+const sql = readFileSync(join(__dirname, "../db_is_seguridad.sql"), "utf8")
+  .replace(/OWNER TO \w+/g, `OWNER TO ${dbUser}`);
 
 const pool = new pg.Pool({
   host: process.env.DB_HOST,
