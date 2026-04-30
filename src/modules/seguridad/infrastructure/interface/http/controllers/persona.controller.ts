@@ -40,6 +40,7 @@ import { RegisterPersonaLocalMapper } from "../mappers/register-persona-local.ma
 import { emailConfig, queueConfig, smsConfig } from "../../../../../../shared/config/database.config.js";
 import { InMemoryEmailQueueService } from "../../../../../../shared/email/in-memory-email-queue.service.js";
 import { NodemailerEmailService } from "../../../../../../shared/email/nodemailer-email.service.js";
+import { HttpEmailService } from "../../../../../../shared/email/http-email.service.js";
 import { HttpSmsService, NoopSmsService } from "../../../../../../shared/notifications/http-sms.service.js";
 import { JoseJwtService } from "../../../../../../shared/security/jwt.service.js";
 import { JwtRefreshTokenService } from "../../../../../../shared/security/refresh-token.service.js";
@@ -461,15 +462,19 @@ export class PersonaController {
   };
 }
 
-function createEmailService(): NodemailerEmailService {
-  if (emailConfig.provider !== "smtp") {
-    throw new Error(`Proveedor de correo no soportado: ${emailConfig.provider}`);
+function createEmailService() {
+  if (emailConfig.provider === "http") {
+    return new HttpEmailService();
   }
 
-  return new NodemailerEmailService();
+  if (emailConfig.provider === "smtp") {
+    return new NodemailerEmailService();
+  }
+
+  throw new Error(`Proveedor de correo no soportado: ${emailConfig.provider}`);
 }
 
-function createEmailQueueService(emailService: NodemailerEmailService): InMemoryEmailQueueService {
+function createEmailQueueService(emailService: ReturnType<typeof createEmailService>): InMemoryEmailQueueService {
   if (queueConfig.provider !== "memory") {
     throw new Error(`Proveedor de cola no soportado: ${queueConfig.provider}`);
   }

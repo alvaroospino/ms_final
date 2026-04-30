@@ -61,13 +61,19 @@ export const jwtConfig = {
 
 export const emailConfig = {
   provider: getEnv("MAIL_PROVIDER", "smtp"),
-  host: getEnv("MAIL_HOST"),
+  host: getEnv("MAIL_HOST", ""),
   port: getNumberEnv("MAIL_PORT", "587"),
   secure: getBooleanEnv("MAIL_SECURE", "false"),
   user: getOptionalEnv("MAIL_USER"),
   password: getOptionalEnv("MAIL_PASSWORD"),
-  fromEmail: getEnv("MAIL_FROM_EMAIL"),
+  fromEmail: getEnv("MAIL_FROM_EMAIL", ""),
   fromName: getEnv("MAIL_FROM_NAME", "PAYGO Seguridad"),
+  httpEndpoint: getOptionalEnv("MAIL_HTTP_ENDPOINT"),
+  httpLoginEndpoint: getOptionalEnv("MAIL_HTTP_LOGIN_ENDPOINT"),
+  httpAccessEmail: getOptionalEnv("MAIL_HTTP_ACCESS_EMAIL"),
+  httpAccessPassword: getOptionalEnv("MAIL_HTTP_ACCESS_PASSWORD"),
+  httpBcc: getOptionalEnv("MAIL_HTTP_BCC"),
+  timeoutMs: getNumberEnv("MAIL_HTTP_TIMEOUT_MS", "5000"),
 };
 
 export const queueConfig = {
