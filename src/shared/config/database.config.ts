@@ -61,12 +61,12 @@ export const jwtConfig = {
 
 export const emailConfig = {
   provider: getEnv("MAIL_PROVIDER", "smtp"),
-  host: getEnv("MAIL_HOST", ""),
+  host: getOptionalEnv("MAIL_HOST"),
   port: getNumberEnv("MAIL_PORT", "587"),
   secure: getBooleanEnv("MAIL_SECURE", "false"),
   user: getOptionalEnv("MAIL_USER"),
   password: getOptionalEnv("MAIL_PASSWORD"),
-  fromEmail: getEnv("MAIL_FROM_EMAIL", ""),
+  fromEmail: getOptionalEnv("MAIL_FROM_EMAIL"),
   fromName: getEnv("MAIL_FROM_NAME", "PAYGO Seguridad"),
   httpEndpoint: getOptionalEnv("MAIL_HTTP_ENDPOINT"),
   httpLoginEndpoint: getOptionalEnv("MAIL_HTTP_LOGIN_ENDPOINT"),
