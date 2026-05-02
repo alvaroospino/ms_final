@@ -1,4 +1,5 @@
 import cors from "@fastify/cors";
+import multipart from "@fastify/multipart";
 import sensible from "@fastify/sensible";
 import Fastify, { FastifyInstance } from "fastify";
 import {
@@ -28,6 +29,7 @@ import {
 } from "./core/application/use-cases/errors/verificacion-errors.js";
 import { PersonasRoutes } from "./modules/seguridad/infrastructure/interface/http/routes/personas.routes.js";
 import { AccessControlRoutes } from "./modules/seguridad/infrastructure/interface/http/routes/access-control.routes.js";
+import { AdminImagesRoutes } from "./modules/seguridad/infrastructure/interface/http/routes/admin-images.routes.js";
 import {
   DuplicateAssignmentError,
   DuplicateCodeError,
@@ -42,6 +44,7 @@ export async function createServer(): Promise<FastifyInstance> {
 
   await app.register(cors, { origin: true });
   await app.register(sensible);
+  await app.register(multipart);
 
   app.get("/health", async () => ({
     ok: true,
@@ -149,6 +152,7 @@ export async function createServer(): Promise<FastifyInstance> {
 
   await app.register(PersonasRoutes);
   await app.register(AccessControlRoutes);
+  await app.register(AdminImagesRoutes);
 
   return app;
 }
